@@ -19,10 +19,11 @@
 	<key>AllowInlineMediaPlayback</key>
 	<false/>
 	<key>OpenAllWhitelistURLsInWebView</key>
-	<false/>
+	<true/>
 	<key>ExternalHosts</key>
 	<array>
 		<string>www.herdict.org</string>
+		<string>*</string>
 	</array>
 	<key>Plugins</key>
 	<dict>

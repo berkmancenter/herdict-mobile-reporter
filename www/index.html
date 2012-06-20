@@ -24,23 +24,33 @@
 				<h1>Herdict Mobile</h1>
 			</div>
 			<div data-role="content">
-				<div data-role="fieldcontain">
-					<input id="urlField" placeholder="URL" type="text"/>
+				<div id="urlFieldContain">
+					<div id="iframeHolder">
+						<iframe src=""></iframe>
+						<div id="iframeBlocker"></div>
+					</div>
+					<a href="http://cyber.law.harvard.edu" id="iframeLink" target="_blank">Interaction with this site has been disabled; click here to open in browser</a>
+					<div>
+						<input id="urlField" placeholder="URL" type="url"/>
+					</div>
+					<script type="text/javascript">
+						function updateIframeLocation(){
+							var url = $("#urlField")[0].value;
+							if (url.substr(0,7) != "http://"){
+								url = "http://" + url;
+							}
+							$("#urlFieldContain #iframeHolder iframe")[0].src = url;
+							$("#iframeLink")[0].href = url;
+						}
+						$("#urlField").on("change", updateIframeLocation);
+					</script>
 				</div>
 				<div data-role="fieldcontain">
 					<label for="categoriesField">Category</label>
 					<select id="categoriesField"></select>
 				</div>
-				<div data-role="fieldcontain">
-					<label for="interestsField">Interests</label>
-					<select id="interestsField"></select>
-				</div>
-				<div data-role="fieldcontain">
-					<label for="reasonsField">Reasons</label>
-					<select id="reasonsField"></select>
-				</div>
 				<div data-role="collapsible" data-theme="a" data-content-theme="a">
-					<h3 id="locationHeader">Derp</h3>
+					<h3 id="locationHeader">Location</h3>
 					<p>
 						<div data-role="fieldcontain">
 							<label for="countriesField">Country</label>
@@ -62,6 +72,17 @@
 						$("#countriesField").on("change", updateLocationHeader);
 						$("#locationsField").on("change", updateLocationHeader);
 					</script>
+				</div>
+				<div data-role="collapsible" data-theme="a" data-content-theme="a">
+					<h3>Other</h3>
+					<div data-role="fieldcontain">
+						<label for="interestsField">Interests</label>
+						<select id="interestsField"></select>
+					</div>
+					<div data-role="fieldcontain">
+						<label for="reasonsField">Reasons</label>
+						<select id="reasonsField"></select>
+					</div>
 				</div>
 				<div data-role="controlgroup" data-type="horizontal">
 					<a href="index.html" onclick="queueUp(true)" data-role="button">Accessible</a> 
