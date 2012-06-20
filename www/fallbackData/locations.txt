@@ -1,0 +1,1 @@
+[{"value":"location.home","label":"Home"},{"value":"location.work","label":"Work"},{"value":"location.school","label":"School"},{"value":"location.library","label":"Library"},{"value":"location.cybercafe","label":"Cybercafe"},{"value":"location.publicwifi","label":"Public wifi"},{"value":"location.other","label":"Other"}]

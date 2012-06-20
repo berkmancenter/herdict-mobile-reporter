@@ -1,0 +1,1 @@
+[{"value":"interest.low","label":"Not very useful"},{"value":"interest.medium","label":"Moderately useful"},{"value":"interest.high","label":"Very useful"},{"value":"interest.dontunderstand","label":"Site is in a language I don't understand"}]

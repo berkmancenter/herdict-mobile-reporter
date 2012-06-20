@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Basics -->
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+		<title></title>
+		<!-- PhoneGap -->
+		<script type="text/javascript" src="resources/js/cordova.js"></script>
+		<!-- Jquery -->
+		<script type="text/javascript" src="resources/js/jQuery.js"></script>
+		<!-- Jquery Mobile -->
+		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobile.css" />
+		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobileStructure.css" />
+		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobileTheme.css" />
+		<script type="text/javascript" src="resources/jQueryMobile/jQueryMobile.js"></script>
+		<!-- Our JS -->
+		<script type="text/javascript" src="resources/js/engine.js"></script>
+	</head>
+	<body>
+		<div data-role="page">
+			<div data-role="header">
+				<h1>Herdict Mobile</h1>
+			</div>
+			<div data-role="content">
+				<div data-role="fieldcontain">
+					<select id="categoriesField"></select>
+				</div>
+				<div data-role="fieldcontain">
+					<select id="countriesField"></select>
+				</div>
+				<div data-role="fieldcontain">
+					<select id="locationsField"></select>
+				</div>
+				<div data-role="fieldcontain">
+					<select id="interestsField"></select>
+				</div>
+				<div data-role="fieldcontain">
+					<select id="reasonsField"></select>
+				</div>
+				<div data-role="fieldcontain">
+					<input id="ispField" placeholder="ISP" type="text" />
+				</div>
+				<div data-role="fieldcontain">
+					<input id="urlField" placeholder="URL" type="text"/>
+				</div>
+				<a href="index.html" data-role="button">Submit Report</a> 
+			</div>
+		</div>
+	</body>
+</html>

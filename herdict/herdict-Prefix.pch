@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'herdict' target in the 'herdict' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+#endif
