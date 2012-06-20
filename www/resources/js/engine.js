@@ -90,22 +90,32 @@ fieldsLoaded = 0;
 function loadedData(){
 	fieldsLoaded++;
 	if (fieldsLoaded == toLoad.length){
-
+		for (var i = 0; i < toLoad.length; i++){
+			$("#"+toLoad[i]+"Field").selectmenu("refresh");
+			$("#"+toLoad[i]+"Field").trigger("change");
+		}
 	}
 }
 
 function connectToBackupDB(){
 	var db = window.openDatabase("fallbacks", "1.0", "Herdict fallbacks incase herdict is inaccessible", 102400);
 	db.transaction(function (t){
-		t.executeSql("CREATE TABLE backup (keyTxt varchar(40) PRIMARY KEY, valueTxt varchar(10000))");
+		t.executeSql("CREATE TABLE IF NOT EXISTS backup (keyTxt varchar(40) PRIMARY KEY, valueTxt varchar(10000))");
 	});
 	return db;
 }
 
 function connectToQueue(){
-	var db = window.openDatabase("queue", "1.0", "Herdict report queue", 102400);
+	var db = window.openDatabase("toSend", "1.0", "Herdict report queue", 102400);
 	db.transaction(function (t){
-		t.executeSql("CREATE TABLE queue (id int PRIMARY KEY AUTO_INCREMENT, category varchar(100), country varchar(3), location varchar(100), interest varchar(100), reason varchar(100), isp varchar(255), url varchar(4000), accessible bit)");
+		t.executeSql("CREATE TABLE IF NOT EXISTS toSendQueue (id INTEGER PRIMARY KEY AUTOINCREMENT, category varchar(100), country varchar(3), location varchar(100), interest varchar(100), reason varchar(100), isp varchar(255), url varchar(4000),  accessible boolean)",
+		[],
+		function (t, r){
+
+		}, 
+		function (t, e){
+			alert(e.message);
+		});
 	});
 	return db;
 }
@@ -123,13 +133,15 @@ function queueUp(accessibleBoolean){
 	// store in db
 	var db = connectToQueue();
 	db.transaction(function (t){
-		t.executeSql("INSERT INTO queue(category, country, location, interest, reason, isp, url, accessible) VALUES (?, ?, ?, ?, ?, ?, ?)", 
+		t.executeSql("INSERT INTO toSendQueue (category, country, location, interest, reason, isp, url, accessible) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", 
 			[category, country, location, interest, reason, isp, url, accessible],
 			function (t, r){
 				// begin checking until I can dequeue
 				checkHerdict();
 			},
-			function (t, e){}
+			function (t, e){
+				alert(e.message);
+			}
 		);
 	});
 	// clear text fields
@@ -145,18 +157,32 @@ function deQueue(){
 	// connect to db
 	var db = connectToQueue();
 	db.transaction(function (t){
-		t.executeSql("SELECT * FROM queue", [] , function (t, r){
+		t.executeSql("SELECT * FROM toSendQueue", [] , function (t, r){
 			// send data to server
 			var resultsLen = r.rows.length;
 			for (var i = 0; i < resultsLen; i++){
 				// TODO: Make API Call
+				var toAlert = "";
+				for (var column in r.rows.item(i)){
+					toAlert += (column + ": " + (r.rows.item(i))[column] + "\n");
+				}
+				alert(toAlert);
+				// drop row
+				t.executeSql("DELETE FROM toSendQueue WHERE id=?", [r.rows.item(i).id]);
 			}
 		});
 	});
 }
 function checkHerdict(){
 	// check if site is accessible, if so, dequeue 
-
-	// if not, check again soon
-
+	$.ajax({
+		url:'http://www.herdict.org',
+		success: function (){
+			deQueue();
+		},
+		error: function (){
+			// check again later
+			setTimeout(checkHerdict, 60000);
+		} 
+	});
 }

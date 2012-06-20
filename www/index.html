@@ -16,6 +16,7 @@
 		<script type="text/javascript" src="resources/jQueryMobile/jQueryMobile.js"></script>
 		<!-- Our JS -->
 		<script type="text/javascript" src="resources/js/engine.js"></script>
+		<link rel="stylesheet" href="resources/css/style.css" />
 	</head>
 	<body>
 		<div data-role="page">
@@ -24,27 +25,48 @@
 			</div>
 			<div data-role="content">
 				<div data-role="fieldcontain">
+					<input id="urlField" placeholder="URL" type="text"/>
+				</div>
+				<div data-role="fieldcontain">
+					<label for="categoriesField">Category</label>
 					<select id="categoriesField"></select>
 				</div>
 				<div data-role="fieldcontain">
-					<select id="countriesField"></select>
-				</div>
-				<div data-role="fieldcontain">
-					<select id="locationsField"></select>
-				</div>
-				<div data-role="fieldcontain">
+					<label for="interestsField">Interests</label>
 					<select id="interestsField"></select>
 				</div>
 				<div data-role="fieldcontain">
+					<label for="reasonsField">Reasons</label>
 					<select id="reasonsField"></select>
 				</div>
-				<div data-role="fieldcontain">
-					<input id="ispField" placeholder="ISP" type="text" />
+				<div data-role="collapsible" data-theme="a" data-content-theme="a">
+					<h3 id="locationHeader">Derp</h3>
+					<p>
+						<div data-role="fieldcontain">
+							<label for="countriesField">Country</label>
+							<select id="countriesField"></select>
+						</div>
+						<div data-role="fieldcontain">
+							<label for="locationsField">Location</label>
+							<select id="locationsField"></select>
+						</div>
+						<div data-role="fieldcontain">
+							<label for="ispField">ISP</label>
+							<input id="ispField" placeholder="ISP" type="text" />
+						</div>
+					</p>
+					<script type="text/javascript">
+						function updateLocationHeader(){
+							$("#locationHeader .ui-btn-text").html($("#countriesField")[0].value + " - " + $("#locationsField option:selected").html());
+						}
+						$("#countriesField").on("change", updateLocationHeader);
+						$("#locationsField").on("change", updateLocationHeader);
+					</script>
 				</div>
-				<div data-role="fieldcontain">
-					<input id="urlField" placeholder="URL" type="text"/>
+				<div data-role="controlgroup" data-type="horizontal">
+					<a href="index.html" onclick="queueUp(true)" data-role="button">Accessible</a> 
+					<a href="index.html" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
 				</div>
-				<a href="index.html" data-role="button">Submit Report</a> 
 			</div>
 		</div>
 	</body>
