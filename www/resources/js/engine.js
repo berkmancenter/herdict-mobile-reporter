@@ -186,3 +186,28 @@ function checkHerdict(){
 		} 
 	});
 }
+
+// child browser
+
+var childbrowser;
+ 
+function onBodyLoad(){
+	document.addEventListener("deviceready", onDeviceReady, false);
+}
+ 
+function onDeviceReady(){
+	// do your thing!
+	childbrowser = ChildBrowser.install();
+	navigator.notification.alert("Cordova is working")
+}
+/*
+function onLinkClick(){   
+    if(childbrowser != null){
+        childbrowser.onLocationChange = function(loc){ alert("In index.html new loc = " + loc); };
+        childbrowser.onClose = function(){alert("In index.html child browser closed");};
+        childbrowser.onOpenExternal = function(){alert("In index.html onOpenExternal");};
+ 
+        window.plugins.childBrowser.showWebPage("http://google.com");
+    }  
+}
+*/

@@ -14,14 +14,17 @@
 		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobileStructure.css" />
 		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobileTheme.css" />
 		<script type="text/javascript" src="resources/jQueryMobile/jQueryMobile.js"></script>
-		<!-- Our JS -->
+		<!-- Our JS and CSS -->
+		<script type="text/javascript" src="resources/js/ChildBrowser.js"></script>
 		<script type="text/javascript" src="resources/js/engine.js"></script>
 		<link rel="stylesheet" href="resources/css/style.css" />
 	</head>
 	<body>
 		<div data-role="page">
 			<div data-role="header">
+				<a href="index.html" data-icon="home" data-iconpos="notext"></a>
 				<h1>Herdict Mobile</h1>
+				<a href="index.html" data-icon="star" data-iconpos="notext"></a>
 			</div>
 			<div data-role="content">
 				<div id="urlFieldContain">
@@ -29,20 +32,24 @@
 						<iframe src=""></iframe>
 						<div id="iframeBlocker"></div>
 					</div>
-					<a href="http://cyber.law.harvard.edu" id="iframeLink" target="_blank">Interaction with this site has been disabled; click here to open in browser</a>
+					<a href="#" onclick="openUpLink()" id="iframeLink">Interaction with this site has been disabled; click here to open in browser</a>
 					<div>
 						<input id="urlField" placeholder="URL" type="url"/>
 					</div>
 					<script type="text/javascript">
+						var currentURL
 						function updateIframeLocation(){
 							var url = $("#urlField")[0].value;
 							if (url.substr(0,7) != "http://"){
 								url = "http://" + url;
 							}
 							$("#urlFieldContain #iframeHolder iframe")[0].src = url;
-							$("#iframeLink")[0].href = url;
+							currentURL = url;
 						}
 						$("#urlField").on("change", updateIframeLocation);
+						function openUpLink(){
+							window.plugins.childBrowser.showWebPage(currentURL);
+						}
 					</script>
 				</div>
 				<div data-role="fieldcontain">

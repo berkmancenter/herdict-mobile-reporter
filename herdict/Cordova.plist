@@ -27,6 +27,10 @@
 	</array>
 	<key>Plugins</key>
 	<dict>
+		<key>ChildBrowserCommand</key>
+		<string>ChildBrowserCommand</string>
+		<key>ChildBrowser</key>
+		<string>ChildBrowser.js</string>
 		<key>Logger</key>
 		<string>CDVLogger</string>
 		<key>Compass</key>

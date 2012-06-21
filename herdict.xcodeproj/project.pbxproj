@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		611F2A3A15939EDB00F59D3C /* ChildBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 611F2A3415939EDB00F59D3C /* ChildBrowser.bundle */; };
+		611F2A3B15939EDB00F59D3C /* ChildBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 611F2A3615939EDB00F59D3C /* ChildBrowserCommand.m */; };
+		611F2A3C15939EDB00F59D3C /* ChildBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611F2A3815939EDB00F59D3C /* ChildBrowserViewController.m */; };
+		611F2A3D15939EDB00F59D3C /* ChildBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611F2A3915939EDB00F59D3C /* ChildBrowserViewController.xib */; };
 		613C83B3158F9C630076C6FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 613C83B2158F9C630076C6FE /* Foundation.framework */; };
 		613C83B5158F9C630076C6FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 613C83B4158F9C630076C6FE /* UIKit.framework */; };
 		613C83B7158F9C630076C6FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 613C83B6158F9C630076C6FE /* CoreGraphics.framework */; };
@@ -41,6 +45,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		611F2A3415939EDB00F59D3C /* ChildBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ChildBrowser.bundle; sourceTree = "<group>"; };
+		611F2A3515939EDB00F59D3C /* ChildBrowserCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserCommand.h; sourceTree = "<group>"; };
+		611F2A3615939EDB00F59D3C /* ChildBrowserCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserCommand.m; sourceTree = "<group>"; };
+		611F2A3715939EDB00F59D3C /* ChildBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserViewController.h; sourceTree = "<group>"; };
+		611F2A3815939EDB00F59D3C /* ChildBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserViewController.m; sourceTree = "<group>"; };
+		611F2A3915939EDB00F59D3C /* ChildBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildBrowserViewController.xib; sourceTree = "<group>"; };
 		613C83AE158F9C630076C6FE /* herdict.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = herdict.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		613C83B2158F9C630076C6FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		613C83B4158F9C630076C6FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -256,6 +266,12 @@
 		613C8401158F9C630076C6FE /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				611F2A3415939EDB00F59D3C /* ChildBrowser.bundle */,
+				611F2A3515939EDB00F59D3C /* ChildBrowserCommand.h */,
+				611F2A3615939EDB00F59D3C /* ChildBrowserCommand.m */,
+				611F2A3715939EDB00F59D3C /* ChildBrowserViewController.h */,
+				611F2A3815939EDB00F59D3C /* ChildBrowserViewController.m */,
+				611F2A3915939EDB00F59D3C /* ChildBrowserViewController.xib */,
 				613C8402158F9C630076C6FE /* README */,
 			);
 			name = Plugins;
@@ -331,6 +347,8 @@
 				613C83F7158F9C630076C6FE /* Cordova.plist in Resources */,
 				613C8400158F9C630076C6FE /* MainViewController.xib in Resources */,
 				613C840A158F9E210076C6FE /* www in Resources */,
+				611F2A3A15939EDB00F59D3C /* ChildBrowser.bundle in Resources */,
+				611F2A3D15939EDB00F59D3C /* ChildBrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,6 +378,8 @@
 				613C83D3158F9C630076C6FE /* main.m in Sources */,
 				613C83FB158F9C630076C6FE /* AppDelegate.m in Sources */,
 				613C83FE158F9C630076C6FE /* MainViewController.m in Sources */,
+				611F2A3B15939EDB00F59D3C /* ChildBrowserCommand.m in Sources */,
+				611F2A3C15939EDB00F59D3C /* ChildBrowserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +562,7 @@
 				613C8408158F9C630076C6FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
