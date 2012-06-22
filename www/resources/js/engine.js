@@ -156,23 +156,49 @@ function queueUp(accessibleBoolean){
 function deQueue(){
 	// connect to db
 	var db = connectToQueue();
+	var r; // rows
 	db.transaction(function (t){
-		t.executeSql("SELECT * FROM toSendQueue", [] , function (t, r){
-			// send data to server
-			var resultsLen = r.rows.length;
-			for (var i = 0; i < resultsLen; i++){
-				// TODO: Make API Call
-				var toAlert = "";
-				for (var column in r.rows.item(i)){
-					toAlert += (column + ": " + (r.rows.item(i))[column] + "\n");
-				}
-				alert(toAlert);
-				// drop row
-				t.executeSql("DELETE FROM toSendQueue WHERE id=?", [r.rows.item(i).id]);
+		t.executeSql("SELECT * FROM toSendQueue", [], function (t, rows){
+			r = rows;
+		});
+	},
+	function (){
+		/* empty error handler */
+	},
+	function (){
+		// send data to server
+		var resultsLen = r.rows.length;
+		for (var i = 0; i < resultsLen; i++){
+			// TODO: Make API Call
+			var toAlert = "";
+			for (var column in r.rows.item(i)){
+				toAlert += (column + ": " + (r.rows.item(i))[column] + "\n");
+			}
+			// alert(toAlert);
+			// drop row
+			db.transaction(function (t){
+				// TODO: r.rows.item(i).id is an error, specifically the call works if r.rows, but once you add .item(i) it breaks
+				/*
+				t.executeSql("DELETE FROM toSendQueue WHERE id=?", [r.rows.item(i).id], 
+					function (t, r){ 
+						alert("removed");
+					},
+					function (t, e){
+						alert("Huh");
+					}
+				);
+				*/
+			});
+			/*
+			function (){ 
+				// empty error handler 
+			},
+			function (){
 				// queue another site if random mode is on
 				loadRandomDomain();
-			}
-		});
+			});
+*/
+		}
 	});
 }
 function checkHerdict(){
