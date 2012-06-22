@@ -11,8 +11,9 @@
 }
 #urlFieldContain #iframeHolder {
 	border:1px solid #000; 
-	width:98% !important;
-	height:200px !important;
+	width:98%;
+	height:200px;
+	padding:0px;
 	display: inline-block;
 	overflow: hidden;
 	box-sizing:border-box;
@@ -24,7 +25,7 @@
 	height:200px !important;
 	border-width:0;
 }
-#iframeBlocker {
+#urlFieldContain #iframeHolder #iframeBlocker {
 	display:inline-block;
 	width:100%;
 	height:100%;
@@ -36,17 +37,19 @@
 }
 #iframeLink {
 	display:inline-block;
-	width:98%;
+	width:100%;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
-	background-color: #000;
-	border:1px solid #000;
+	background-color: rgba(0,0,0,0.4);
 	border-top-width:0;
 	font-size:12px;
 	color:#FFF;
 	padding:5px;
 	text-decoration:none;
 	text-shadow:none;
+	position:absolute;
+	bottom:0;
+	left:0;
 }
 #urlFieldContain div {
 	width:98%;
@@ -55,16 +58,35 @@
 }
 #urlFieldContain div input {
 	border:1px solid #000;
-	border-top-width:0;
+	border-bottom-width:0;
 	margin:0;
 	width:100;
+	-webkit-border-bottom-left-radius: 0;
+	-webkit-border-bottom-right-radius: 0;
+	-moz-border-radius-bottomleft: 0;
+	-moz-border-radius-bottomright: 0;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	width:100%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+}
+#urlFieldContain div[data-role="controlgroup"] {
+	width:98%;
+}
+#urlFieldContain div[data-role="controlgroup"] a{
+	font-size:16px;
 	-webkit-border-top-left-radius: 0;
 	-webkit-border-top-right-radius: 0;
 	-moz-border-radius-topleft: 0;
 	-moz-border-radius-topright: 0;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
-	width:100%;
-	box-sizing:border-box;
-	-moz-box-sizing:border-box;
+}
+#randomButton.toggledOn{
+	background-image:none;
+	background-color: #99CA3B;
+}
+.ui-br.ui-field-contain {
+	border-width:0;
 }

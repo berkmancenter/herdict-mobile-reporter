@@ -24,27 +24,36 @@
 			<div data-role="header">
 				<a href="index.html" data-icon="home" data-iconpos="notext"></a>
 				<h1>Herdict Mobile</h1>
-				<a href="index.html" data-icon="star" data-iconpos="notext"></a>
+				<a href="#" data-icon="star" id="randomButton" data-iconpos="notext"></a>
 			</div>
 			<div data-role="content">
 				<div id="urlFieldContain">
+					<div>
+						<input id="urlField" placeholder="URL" type="url"/>
+					</div>
 					<div id="iframeHolder">
 						<iframe src=""></iframe>
 						<div id="iframeBlocker"></div>
+						<a href="#" onclick="openUpLink()" id="iframeLink">Interaction with this site has been disabled; click here to open in browser</a>
 					</div>
-					<a href="#" onclick="openUpLink()" id="iframeLink">Interaction with this site has been disabled; click here to open in browser</a>
-					<div>
-						<input id="urlField" placeholder="URL" type="url"/>
+					<div data-role="controlgroup" data-type="horizontal">
+						<a href="index.html" onclick="queueUp(true)" data-role="button">Accessible</a> 
+						<a href="index.html" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
 					</div>
 					<script type="text/javascript">
 						var currentURL
 						function updateIframeLocation(){
-							var url = $("#urlField")[0].value;
-							if (url.substr(0,7) != "http://"){
-								url = "http://" + url;
+							if (!hideFromReporter){
+								var url = $("#urlField")[0].value;
+								if (url.substr(0,7) != "http://"){
+									url = "http://" + url;
+								}
+								$("#urlFieldContain #iframeHolder iframe")[0].src = url;
+								currentURL = url;
 							}
-							$("#urlFieldContain #iframeHolder iframe")[0].src = url;
-							currentURL = url;
+							else {
+								hideFromReporter = false;
+							}
 						}
 						$("#urlField").on("change", updateIframeLocation);
 						function openUpLink(){
@@ -90,10 +99,6 @@
 						<label for="reasonsField">Reasons</label>
 						<select id="reasonsField"></select>
 					</div>
-				</div>
-				<div data-role="controlgroup" data-type="horizontal">
-					<a href="index.html" onclick="queueUp(true)" data-role="button">Accessible</a> 
-					<a href="index.html" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
 				</div>
 			</div>
 		</div>

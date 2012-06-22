@@ -169,6 +169,8 @@ function deQueue(){
 				alert(toAlert);
 				// drop row
 				t.executeSql("DELETE FROM toSendQueue WHERE id=?", [r.rows.item(i).id]);
+				// queue another site if random mode is on
+				loadRandomDomain();
 			}
 		});
 	});
@@ -187,6 +189,52 @@ function checkHerdict(){
 	});
 }
 
+// functions for domain roulette
+
+var randomMode = false;
+var randomQueue;
+var hideFromReporter = false;
+
+function loadRandomDomain(){
+	if (randomMode){
+		if (typeof(randomQueue) == 'undefined'){
+			$.ajax({
+				url: 'http://herdict.podconsulting.net/ajax/lists/-1/pages',
+				success: function (data, status, jqxhr){
+					randomQueue = $.parseJSON(jqxhr.responseText);
+					randomQueue.reverse(); // so that the most important item is last and can easily be popped
+					loadRandomDomain();
+				},
+			});
+		}
+		var randomDomain = randomQueue.pop();
+		hideFromReporter = randomDomain.site.hideFromReporter;
+		$("#urlField")[0].value = randomDomain.site.url;
+		$("#urlField").trigger("change");
+		// TODO:possibly delete?, tries to guess category based on categorization group
+		/*
+		$('#categoriesField option:selected').removeAttr("selected");
+		$($('#categoriesField option[value^="' + randomDomain.site.category + '"]')[0]).prop("selected", true);
+		$('#categoriesField').selectmenu("refresh");
+		*/
+	}
+}
+
+function toggleRandom (){
+	if (!randomMode){
+		randomMode = true;
+		$("#randomButton").addClass("toggledOn");
+	}
+	else {
+		randomMode = false;
+		$("#randomButton").removeClass("toggledOn");
+	}
+}
+
+$(document).ready(function (){
+	$("#randomButton").on("click", toggleRandom);
+});
+
 // child browser
 
 var childbrowser;
@@ -198,7 +246,6 @@ function onBodyLoad(){
 function onDeviceReady(){
 	// do your thing!
 	childbrowser = ChildBrowser.install();
-	navigator.notification.alert("Cordova is working")
 }
 /*
 function onLinkClick(){   
