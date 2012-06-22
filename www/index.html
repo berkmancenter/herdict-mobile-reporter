@@ -28,32 +28,17 @@
 			</div>
 			<div data-role="content">
 				<div id="urlFieldContain">
-					<div>
-						<input id="urlField" placeholder="URL" type="url"/>
-					</div>
-					<div id="iframeHolder">
-						<iframe src=""></iframe>
-						<div id="iframeBlocker"></div>
-						<a href="#" onclick="openUpLink()" id="iframeLink">Interaction with this site has been disabled; click here to open in browser</a>
-					</div>
-					<div data-role="controlgroup" data-type="horizontal">
-						<a href="index.html" onclick="queueUp(true)" data-role="button">Accessible</a> 
-						<a href="index.html" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
-					</div>
+					<input id="urlField" placeholder="URL" type="url"/>
+					<a href="#" onclick="openUpLink()" data-role="button" data-iconpos="left" data-theme="a" data-icon="arrow-r" id="iframeLink"></a>
 					<script type="text/javascript">
 						var currentURL
 						function updateIframeLocation(){
-							if (!hideFromReporter){
-								var url = $("#urlField")[0].value;
-								if (url.substr(0,7) != "http://"){
-									url = "http://" + url;
-								}
-								$("#urlFieldContain #iframeHolder iframe")[0].src = url;
-								currentURL = url;
+							var url = $("#urlField")[0].value;
+							if (url.substr(0,7) != "http://"){
+								url = "http://" + url;
 							}
-							else {
-								hideFromReporter = false;
-							}
+							currentURL = url;
+							openUpLink();
 						}
 						$("#urlField").on("change", updateIframeLocation);
 						function openUpLink(){
@@ -61,6 +46,8 @@
 						}
 					</script>
 				</div>
+				<a href="index.html" onclick="queueUp(true)" data-role="button">Accessible</a> 
+				<a href="index.html" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
 				<div data-role="fieldcontain">
 					<label for="categoriesField">Category</label>
 					<select id="categoriesField"></select>
