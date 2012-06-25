@@ -144,7 +144,10 @@ function queueUp(accessibleBoolean){
 			}
 		);
 	});
-	// clear text fields
+	resetAllFields();
+	
+}
+function resetAllFields(){
 	$("#categoriesField option:selected").removeAttr("selected");
 	$("#categoriesField").selectmenu("refresh");
 	$("#interestsField option:selected").removeAttr("selected");
@@ -152,54 +155,31 @@ function queueUp(accessibleBoolean){
 	$("#reasonsField option:selected").removeAttr("selected");
 	$("#reasonsField").selectmenu("refresh");
 	$("#urlField")[0].value = "";
+	$(".accessSubmit").removeClass("ui-btn-active");
 }
 function deQueue(){
 	// connect to db
 	var db = connectToQueue();
-	var r; // rows
+	
 	db.transaction(function (t){
-		t.executeSql("SELECT * FROM toSendQueue", [], function (t, rows){
-			r = rows;
-		});
-	},
-	function (){
-		/* empty error handler */
-	},
-	function (){
-		// send data to server
-		var resultsLen = r.rows.length;
-		for (var i = 0; i < resultsLen; i++){
-			// TODO: Make API Call
-			var toAlert = "";
-			for (var column in r.rows.item(i)){
-				toAlert += (column + ": " + (r.rows.item(i))[column] + "\n");
-			}
-			// alert(toAlert);
-			// drop row
-			db.transaction(function (t){
-				// TODO: r.rows.item(i).id is an error, specifically the call works if r.rows, but once you add .item(i) it breaks
-				/*
-				t.executeSql("DELETE FROM toSendQueue WHERE id=?", [r.rows.item(i).id], 
-					function (t, r){ 
-						alert("removed");
-					},
-					function (t, e){
-						alert("Huh");
+		t.executeSql("SELECT * FROM toSendQueue", [], 
+			function (t, results){
+				r = results;
+				// send data to server
+				var resultsLen = r.rows.length;
+				for (var i = 0; i < resultsLen; i++){
+					// TODO: Make API Call
+					var toAlert = "";
+					for (var column in r.rows.item(i)){
+						toAlert += (column + ": " + (r.rows.item(i))[column] + "\n");
 					}
-				);
-				*/
-			});
-			/*
-			function (){ 
-				// empty error handler 
-			},
-			function (){
-				// queue another site if random mode is on
-				loadRandomDomain();
-			});
-*/
-		}
+					//alert(toAlert);
+					t.executeSql("DELETE FROM toSendQueue WHERE id=?", [r.rows.item(i).id]);
+				}
+		});
+
 	});
+	loadRandomDomain();
 }
 function checkHerdict(){
 	// check if site is accessible, if so, dequeue 
@@ -234,9 +214,14 @@ function loadRandomDomain(){
 			});
 		}
 		var randomDomain = randomQueue.pop();
-		hideFromReporter = randomDomain.site.hideFromReporter;
-		$("#urlField")[0].value = randomDomain.site.url;
-		$("#urlField").trigger("change");
+		if (randomDomain.adult === true){
+			loadRandomDomain();
+		}
+		else {
+			hideFromReporter = randomDomain.site.hideFromReporter;
+			$("#urlField")[0].value = randomDomain.site.url;
+			$("#urlField").trigger("change");
+		}
 		// TODO:possibly delete?, tries to guess category based on categorization group
 		/*
 		$('#categoriesField option:selected').removeAttr("selected");
