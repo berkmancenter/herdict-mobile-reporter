@@ -5,12 +5,12 @@
 	font-weight:bold;
 	margin-bottom:10px;
 }
-#urlFieldContain {
+#urlFieldContain, #urlCheckFieldContain {
 	margin-top:0;
 	font-size:0;
 	position:relative;
 }
-#iframeLink {
+#iframeLink, #checkLink {
 	display:inline-block;
 	width:40px;
 	margin:0;
@@ -35,7 +35,7 @@
 	border-top-right-radius: 2px;
 	border-bottom-right-radius: 2px;
 }
-#iframeLink > span{
+#iframeLink > span, #checkLink > span{
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
@@ -50,7 +50,7 @@
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
 }
-#urlField {
+#urlField, #urlCheckField {
 	border:1px solid #000;
 	margin:0;
 	box-sizing:border-box;
@@ -64,4 +64,26 @@
 }
 .ui-br.ui-field-contain {
 	border-width:0;
+}
+
+#walkthroughWrapper {
+	text-align:center;
+	width:100%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+}
+#walkthroughWrapper img {
+	max-width:90%;
+	background-color:#FFF;
+	padding:5px;
+	border:1px solid #333;
+	margin:5px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+#walkthroughWrapper h1 {
+	margin-top:10px;
+	margin-bottom:10px;
+	font-size:24px;
 }

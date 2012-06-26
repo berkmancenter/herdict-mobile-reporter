@@ -12,7 +12,7 @@
 		<!-- Jquery Mobile -->
 		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobile.css" />
 		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobileStructure.css" />
-		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobileTheme.css" />
+		<link rel="stylesheet" href="resources/jQueryMobile/herdict.min.css" />
 		<script type="text/javascript" src="resources/jQueryMobile/jQueryMobile.js"></script>
 		<!-- Our JS and CSS -->
 		<script type="text/javascript" src="resources/js/ChildBrowser.js"></script>
@@ -20,10 +20,26 @@
 		<link rel="stylesheet" href="resources/css/style.css" />
 	</head>
 	<body>
-		<div data-role="page">
+
+		<!-- INDEX -->
+
+		<div id="home" data-role="page">
 			<div data-role="header">
-				<a href="index.html" data-icon="home" data-iconpos="notext"></a>
+				<a href="#" data-icon="arrow-u" data-iconpos="notext"></a>
 				<h1>Herdict Mobile</h1>
+			</div>
+			<div data-role="content">
+				<a href="#walkthrough" data-role="button" data-transition="flip">Report</a>
+				<a href="#view" data-role="button" data-transition="flip">View Data</a>
+			</div>
+		</div>
+
+		<!-- REPORT -->
+
+		<div id="report" data-role="page">
+			<div data-role="header">
+				<a href="#home" data-icon="arrow-l" data-transition="flip" data-iconpos="notext"></a>
+				<h1>Herdict Reporter</h1>
 				<a href="#" data-icon="star" id="randomButton" data-iconpos="notext"></a>
 			</div>
 			<div data-role="content">
@@ -31,7 +47,7 @@
 					<input id="urlField" placeholder="URL" type="url"/>
 					<a href="#" onclick="openUpLink()" data-role="button" data-iconpos="left" data-theme="a" data-icon="arrow-r" id="iframeLink"></a>
 					<script type="text/javascript">
-						var currentURL
+						var currentURL;
 						function updateIframeLocation(){
 							var url = $("#urlField")[0].value;
 							if (url.substr(0,7) != "http://"){
@@ -49,19 +65,22 @@
 				<a href="index.html" class="accessSubmit" onclick="queueUp(true)" data-role="button">Accessible</a> 
 				<a href="index.html" class="accessSubmit" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
 				<div data-role="fieldcontain">
-					<label for="categoriesField">Category</label>
-					<select id="categoriesField"></select>
+					<select id="categoriesField">
+						<option value="">Select Category</option>
+					</select>
 				</div>
 				<div data-role="collapsible" data-theme="a" data-content-theme="a">
 					<h3 id="locationHeader">Location</h3>
 					<p>
 						<div data-role="fieldcontain">
-							<label for="countriesField">Country</label>
-							<select id="countriesField"></select>
+							<select id="countriesField">
+								<option value="">Select Country</option>
+							</select>
 						</div>
 						<div data-role="fieldcontain">
-							<label for="locationsField">Location</label>
-							<select id="locationsField"></select>
+							<select id="locationsField">
+								<option value="">Select Location</option>
+							</select>
 						</div>
 						<div data-role="fieldcontain">
 							<label for="ispField">ISP</label>
@@ -79,12 +98,74 @@
 				<div data-role="collapsible" data-theme="a" data-content-theme="a">
 					<h3>Other</h3>
 					<div data-role="fieldcontain">
-						<label for="interestsField">Interests</label>
-						<select id="interestsField"></select>
+						<select id="interestsField">
+							<option value="">Select Interest</option>
+						</select>
 					</div>
 					<div data-role="fieldcontain">
-						<label for="reasonsField">Reasons</label>
-						<select id="reasonsField"></select>
+						<select id="reasonsField">
+							<option value="">Select Reason</option>
+						</select>
+					</div>
+					<div data-role="fieldcontain">
+						<input id="commentField" placeholder="Comments" type="text"/>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- WALKTHROUGH -->
+
+		<div id="walkthrough" data-role="page">
+			<div data-role="header">
+				<h1>Walkthrough</h1>
+			</div>
+			<div data-role="content">
+				<div id="walkthroughWrapper">
+					<h1>Load a URL</h1>
+					<div>Simply type in a URL into the addressbar</div>
+					<img src="resources/img/walkthrough/addressBar.png" />
+					<div>...or enable random mode</div>
+					<img src="resources/img/walkthrough/random.png" />
+					<h1>Check out the site</h1>
+					<div>A browser will appear showing you the website</div>
+					<img src="resources/img/walkthrough/childBrowser.png" />
+					<div>When you are done discerning whether the site is accessible, simply hit 'done' on the bottom left</div>
+					<h1>Report Back</h1>
+					<div>Once you have tapped done, the app will return to the form. Fill it out with any details you want to share and then select 'accessible' or 'inaccessible' to submit. Thanks!</div>
+					<a href="#report" data-role="button" data-transition="flip" data-theme="b">Ok</a>
+					<a href="#report" data-role="button" data-transition="flip" id="neverShowWalkthrough" data-theme="b">Never show me this again</a>
+					<script type="text/javascript">
+						$("#neverShowWalkthrough").on("click", function (){
+							window.skipWalkthrough = "true";
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+
+		<!-- VIEW -->
+
+		<div id="view" data-role="page">
+			<div data-role="header">
+				<a href="#home" data-icon="arrow-l" data-transition="flip" data-iconpos="notext"></a>
+				<h1>Herdict Viewer</h1>
+			</div>
+			<div data-role="content">
+				<div id="urlCheckFieldContain">
+					<input id="urlCheckField" placeholder="URL" type="url"/>
+					<a href="#" onclick="checkLink()" data-role="button" data-iconpos="left" data-theme="a" data-icon="arrow-r" id="checkLink"></a>
+				</div>
+				<div id="herdometer"></div>
+				<div id="herdometerData">
+					<h1>Inaccessible</h1>
+					<div>
+						<div>Globally</div>
+						<div id="globalCount"></div>
+					</div>
+					<div>
+						<div>Locally</div>
+						<div id="localCount"></div>
 					</div>
 				</div>
 			</div>
