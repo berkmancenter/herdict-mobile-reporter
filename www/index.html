@@ -4,7 +4,7 @@
 		<!-- Basics -->
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
-		<title></title>
+		<title>Herdict</title>
 		<!-- PhoneGap -->
 		<script type="text/javascript" src="resources/js/cordova.js"></script>
 		<!-- Jquery -->
@@ -29,8 +29,14 @@
 				<h1>Herdict Mobile</h1>
 			</div>
 			<div data-role="content">
-				<a href="#walkthrough" data-role="button" data-transition="flip">Report</a>
-				<a href="#view" data-role="button" data-transition="flip">View Data</a>
+				<a href="#walkthrough" data-role="button" id="reportHomeLink" data-transition="flip">
+					<img src="resources/img/home/report.png" />
+					<div>Report</div>
+				</a>
+				<a href="#view" data-role="button" data-transition="flip" id="queryHomeLink">
+					<img src="resources/img/home/query.png" />
+					<div>View Data</div>
+				</a>
 			</div>
 		</div>
 
@@ -62,53 +68,54 @@
 						}
 					</script>
 				</div>
-				<a href="index.html" class="accessSubmit" onclick="queueUp(true)" data-role="button">Accessible</a> 
-				<a href="index.html" class="accessSubmit" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
-				<div data-role="fieldcontain">
-					<select id="categoriesField">
-						<option value="">Select Category</option>
-					</select>
-				</div>
-				<div data-role="collapsible" data-theme="a" data-content-theme="a">
-					<h3 id="locationHeader">Location</h3>
-					<p>
+				<a href="#" class="accessSubmit" id="accessibleButton" onclick="queueUp(true)" data-role="button">Accessible</a> 
+				<a href="#" class="accessSubmit" id="inaccessibleButton" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
+				<div id="otherOptionsNote">Scroll down for more options</div>
+				<div id="otherOptions">
+					<div data-role="collapsible" data-theme="a" onclick="scrollToBottom()" data-content-theme="a">
+						<h3 id="locationHeader">Location</h3>
+						<p>
+							<div data-role="fieldcontain">
+								<select id="countriesField">
+									<option value="">Select Country</option>
+								</select>
+							</div>
+							<div data-role="fieldcontain">
+								<select id="locationsField">
+									<option value="">Select Location</option>
+								</select>
+							</div>
+							<div data-role="fieldcontain">
+								<label for="ispField">ISP</label>
+								<input id="ispField" placeholder="ISP" data-theme="c" type="text" />
+							</div>
+						</p>
+						<script type="text/javascript">
+							function updateLocationHeader(){
+								$("#locationHeader .ui-btn-text").html($("#countriesField")[0].value + " - " + $("#locationsField option:selected").html());
+							}
+							$("#countriesField").on("change", updateLocationHeader);
+							$("#locationsField").on("change", updateLocationHeader);
+						</script>
+					</div>
+					<div data-role="collapsible" data-theme="a" onclick="scrollToBottom()" data-content-theme="a">
+						<h3>Other</h3>
 						<div data-role="fieldcontain">
-							<select id="countriesField">
-								<option value="">Select Country</option>
+							<select id="categoriesField">
+								<option value="">Select Category</option>
 							</select>
 						</div>
 						<div data-role="fieldcontain">
-							<select id="locationsField">
-								<option value="">Select Location</option>
+							<select id="interestsField">
+								<option value="">Select Interest</option>
 							</select>
 						</div>
 						<div data-role="fieldcontain">
-							<label for="ispField">ISP</label>
-							<input id="ispField" placeholder="ISP" type="text" />
+							<select id="reasonsField">
+								<option value="">Select Reason</option>
+							</select>
 						</div>
-					</p>
-					<script type="text/javascript">
-						function updateLocationHeader(){
-							$("#locationHeader .ui-btn-text").html($("#countriesField")[0].value + " - " + $("#locationsField option:selected").html());
-						}
-						$("#countriesField").on("change", updateLocationHeader);
-						$("#locationsField").on("change", updateLocationHeader);
-					</script>
-				</div>
-				<div data-role="collapsible" data-theme="a" data-content-theme="a">
-					<h3>Other</h3>
-					<div data-role="fieldcontain">
-						<select id="interestsField">
-							<option value="">Select Interest</option>
-						</select>
-					</div>
-					<div data-role="fieldcontain">
-						<select id="reasonsField">
-							<option value="">Select Reason</option>
-						</select>
-					</div>
-					<div data-role="fieldcontain">
-						<input id="commentField" placeholder="Comments" type="text"/>
+						<input id="commentField" data-theme="c" placeholder="Comments" type="text"/>
 					</div>
 				</div>
 			</div>
@@ -134,7 +141,7 @@
 					<h1>Report Back</h1>
 					<div>Once you have tapped done, the app will return to the form. Fill it out with any details you want to share and then select 'accessible' or 'inaccessible' to submit. Thanks!</div>
 					<a href="#report" data-role="button" data-transition="flip" data-theme="b">Ok</a>
-					<a href="#report" data-role="button" data-transition="flip" id="neverShowWalkthrough" data-theme="b">Never show me this again</a>
+					<a href="#report" data-role="button" data-transition="flip" id="neverShowWalkthrough" data-theme="b">Don't show this again</a>
 					<script type="text/javascript">
 						$("#neverShowWalkthrough").on("click", function (){
 							window.skipWalkthrough = "true";
@@ -149,24 +156,32 @@
 		<div id="view" data-role="page">
 			<div data-role="header">
 				<a href="#home" data-icon="arrow-l" data-transition="flip" data-iconpos="notext"></a>
-				<h1>Herdict Viewer</h1>
+				<h1>Herdometer</h1>
 			</div>
 			<div data-role="content">
 				<div id="urlCheckFieldContain">
 					<input id="urlCheckField" placeholder="URL" type="url"/>
 					<a href="#" onclick="checkLink()" data-role="button" data-iconpos="left" data-theme="a" data-icon="arrow-r" id="checkLink"></a>
+					<script type="text/javascript">
+						$("#urlCheckField").on("change", checkLink);
+					</script>
 				</div>
-				<div id="herdometer"></div>
+				<div id="herdometer">
+					<div>
+						<img src="resources/img/herdometer/0.png" /> Not Enough Data
+					</div>
+					<div>
+						<img src="resources/img/herdometer/1.png" /> Accessible Everywhere
+					</div>
+					<div>
+						<img src="resources/img/herdometer/2.png" /> Inaccessible in other countries
+					</div>
+					<div>
+						<img src="resources/img/herdometer/3.png" /> Inaccessible in your country
+					</div>
+				</div>
 				<div id="herdometerData">
-					<h1>Inaccessible</h1>
-					<div>
-						<div>Globally</div>
-						<div id="globalCount"></div>
-					</div>
-					<div>
-						<div>Locally</div>
-						<div id="localCount"></div>
-					</div>
+					<span id="globalCount"></span> report(s) of <span class="herdometerSite"></span> being inaccessible globally. <br /><br /><span id="localCount"></span> report(s) of <span class="herdometerSite"></span> being inaccessible in your country.
 				</div>
 			</div>
 		</div>

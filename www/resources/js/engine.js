@@ -147,6 +147,9 @@ function queueUp(accessibleBoolean){
 			}
 		);
 	});
+	if (!randomMode){
+		navigator.notification.alert("Your report has been recorded.", function (){}, "Thanks", "Ok")
+	}
 	resetAllFields();
 	
 }
@@ -173,28 +176,24 @@ function deQueue(){
 					// TODO: add report.sourceID
 					var sourceId = "1"
 					// TODO: Replace dev2 with www
-					var reportRequest = "http://dev2.herdict.org/action/ajax/plugin/report?" + (r.rows.item(i).accessible ? "siteAccessible" : "siteInaccessible") + "&report.url=" + encodeURIComponent(r.rows.item(i).url) + "&report.country.shortName=" + encodeURIComponent(r.rows.item(i).country) + "&report.ispName=" + encodeURIComponent(r.rows.item(i).isp) + "&report.location=" + encodeURIComponent(r.rows.item(i).location) + "&report.interest=" + encodeURIComponent(r.rows.item(i).interest) + "&report.reason=" + encodeURIComponent(r.rows.item(i).reason) + "&report.tag=" + encodeURIComponent(r.rows.item(i).category) + "&report.comments=" + encodeURIComponent(r.rows.item(i).comment) + "&defaultCountryCode=" + encodeURIComponent(locationData.countryShort) + "&defaultISPName=" + encodeURIComponent(locationData.ispName) + "&report.sourceId=" + sourceId + "&encoding=ROT13";
-					alert(reportRequest);
+					var reportRequest = "http://dev2.herdict.org/action/ajax/plugin/report?" + (r.rows.item(i).accessible ? "siteAccessible" : "siteInaccessible") + "&report.url=" + encodeURIComponent(r.rows.item(i).url) + "&report.country.shortName=" + encodeURIComponent(r.rows.item(i).country) + "&report.ispName=" + encodeURIComponent(r.rows.item(i).isp) + "&report.location=" + encodeURIComponent(r.rows.item(i).location) + "&report.interest=" + encodeURIComponent(r.rows.item(i).interest) + "&report.reason=" + encodeURIComponent(r.rows.item(i).reason) + "&report.tag=" + encodeURIComponent(r.rows.item(i).category) + "&report.comments=" + encodeURIComponent(r.rows.item(i).comment) + "&defaultCountryCode=" + encodeURIComponent(locationData.countryShort) + "&defaultISPName=" + encodeURIComponent(locationData.ispName) + "&report.sourceId=" + sourceId + "&encoding=ROT13"; 
 					// report 
 					$.ajax({
 						url: reportRequest,
-						success: (function (idToRemove){
-							return(function (data, status, jqxhr){
+						complete: (function (idToRemove){
+							return(function (){
 								var db = connectToQueue();
 								db.transaction(function (t){
 									t.executeSql("DELETE FROM toSendQueue WHERE id=?", [idToRemove]);
 								});
 							});
-						})(r.rows.item(i).id),
-						error: function(jqxhr, status, errThrown){
-							alert(errThrown);
-						}
+						})(r.rows.item(i).id)
 					});
 				}
 			}
 		);
 	});
-	loadRandomDomain();
+	 loadRandomDomain();
 }
 
 function checkIfDequeue(){
@@ -215,9 +214,10 @@ $(document).ready(function (){
 	checkIfDequeue();
 });
 
-// ui 
+var checkingHerdict;
 
 function checkHerdict(){
+	checkingHerdict = undefined;
 	// check if site is accessible, if so, dequeue 
 	$.ajax({
 		url:'http://www.herdict.org',
@@ -225,8 +225,10 @@ function checkHerdict(){
 			deQueue();
 		},
 		error: function (){
-			// check again later
-			setTimeout(checkHerdict, 60000);
+			// check again later, if not already going to do so
+			if (typeof(checkHerdict) === "undefined"){
+				checkingHerdict = setTimeout(checkHerdict, 60000);
+			}
 		} 
 	});
 }
@@ -323,6 +325,10 @@ function cleanJSON(json){
 	return json.slice(start, end);
 }
 
+function scrollToBottom(){
+	$(window).scrollTop($(document).height());
+}
+
 // *******************
 // *** walkthrough ***
 // *******************
@@ -341,13 +347,17 @@ Object.defineProperty(window, "skipWalkthrough", {
     configurable : true
 });
 
-$(document).ready(function (){
-	$("#walkthrough").on("pagebeforeshow", function (){
-		if (window.skipWalkthrough == "true"){
-			$.mobile.changePage($("#report"));
+$(document).on("pagebeforechange", function (e, data){
+	if (typeof(data.toPage) === "object"){
+		if (data.toPage.is($("#walkthrough"))){
+			if (window.skipWalkthrough == "true"){
+				data.toPage = "#report";
+			}
 		}
-	});
+	}
 });
+
+
 
 // *******************
 // *** child browser *
@@ -387,9 +397,55 @@ function checkLink(){
 		success: function(data, status, jqxhr) {
 			var clean = cleanJSON(jqxhr.responseText);
 			var siteData = $.parseJSON(clean);
-			$("#herdometer").html(siteData.sheepColor);
+			$("#herdometer div").removeClass("activeSheep");
+			$($("#herdometer div")[siteData.sheepColor]).addClass("activeSheep");
 			$("#globalCount").html(siteData.globalInaccessibleCount);
 			$("#localCount").html(siteData.countryInaccessibleCount);
+			$(".herdometerSite").html($("#urlCheckField")[0].value);
+			$("#herdometerData").css('display', 'block');
 		}
 	});
 }
+
+// *******************
+// ***** home ********
+// *******************
+
+function resizeHome(){
+	// grab basics
+	var availiableHeight = $(window).height();
+	var availiableWidth = $(window).width();
+	// subtract padding and navbar
+	availiableHeight -= 30; // padding
+	availiableHeight -= 42; // navbar
+	availiableWidth -= 30; // padding
+	// get whichever is larger 
+	if (availiableHeight >= availiableWidth){
+		$("#reportHomeLink, #queryHomeLink").height((availiableHeight - 10)/2);
+		$("#reportHomeLink, #queryHomeLink").width(availiableWidth);
+		$("#queryHomeLink").css("margin-top", "10px");
+		$("#queryHomeLink").css("margin-left", "0");
+	}
+	else {
+		$("#reportHomeLink, #queryHomeLink").width((availiableWidth - 20)/2);
+		$("#reportHomeLink, #queryHomeLink").height(availiableHeight);
+		$("#queryHomeLink").css("margin-left", "10px");
+		$("#queryHomeLink").css("margin-top", "0");
+	}
+	// center content in each
+	$("#reportHomeLink > span, #queryHomeLink > span").each(function (index, el){
+		var newHeight = ($(el).parent().height() - 102)/2;
+		$(el).css("margin-top", newHeight);
+	});
+}
+
+$(window).on('resize', function (){
+	resizeHome();
+	// stops odd scroll bar glitch
+	resizeHome();
+});
+$(document).one("pageshow", function (){
+	resizeHome();
+	// stops odd scroll bar glitch
+	resizeHome();
+});

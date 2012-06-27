@@ -1,3 +1,31 @@
+[data-role="page"].ui-body-c {
+	background:none;
+}
+
+body.ui-overlay-c.ui-mobile-viewport {
+	background: linear-gradient(bottom, rgb(255,255,255) 0%, rgb(124,187,224) 100%);
+	background: -o-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(124,187,224) 100%);
+	background: -moz-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(124,187,224) 100%);
+	background: -webkit-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(124,187,224) 100%);
+	background: -ms-linear-gradient(bottom, rgb(255,255,255) 0%, rgb(124,187,224) 100%);
+
+	background: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, rgb(255,255,255)),
+		color-stop(1, rgb(124,187,224))
+	);
+	background-attachment: fixed;
+}
+.ui-field-contain .ui-select {
+	width:100%;
+}
+.ui-page.ui-body-c {
+	background-image: url(../img/background/back.png);
+	background-position:bottom center;
+	background-repeat:repeat-x;
+}
 .ui-field-contain label {
 	text-align:center;
 	display: block;
@@ -47,6 +75,7 @@
 	border-bottom-right-radius: 2px;
 	width:100%;
 	height:100%;
+	padding-left:0;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
 }
@@ -57,6 +86,7 @@
 	-moz-box-sizing:border-box;
 	padding-right:40px;
 	width:100%;
+	background-color:#FFF;
 }
 #randomButton.toggledOn{
 	background-image:none;
@@ -86,4 +116,117 @@
 	margin-top:10px;
 	margin-bottom:10px;
 	font-size:24px;
+}
+#reportHomeLink, #queryHomeLink {
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	margin:0;
+	display:inline-block;
+	opacity:0.75;
+}
+#reportHomeLink > span, #queryHomeLink > span {
+	border-top-width:0;
+}
+.accessSubmit.ui-btn {
+	background-image:none;
+}
+#accessibleButton {
+	background-image: linear-gradient(bottom, rgb(82,189,32) 0%, rgb(175,231,44) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(82,189,32) 0%, rgb(175,231,44) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(82,189,32) 0%, rgb(175,231,44) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(82,189,32) 0%, rgb(175,231,44) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(82,189,32) 0%, rgb(175,231,44) 100%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, rgb(82,189,32)),
+		color-stop(1, rgb(175,231,44))
+	);
+	border-color:rgb(175,231,44);
+}
+#inaccessibleButton {
+	background-image: linear-gradient(bottom, rgb(255,123,0) 0%, rgb(255,171,14) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(255,123,0) 0%, rgb(255,171,14) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(255,123,0) 0%, rgb(255,171,14) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(255,123,0) 0%, rgb(255,171,14) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(255,123,0) 0%, rgb(255,171,14) 100%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, rgb(255,123,0)),
+		color-stop(1, rgb(255,171,14))
+	);
+	border-color:rgb(255,171,14);
+}
+#otherOptions {
+	position:absolute;
+	top:100%;
+	background-color:#FFF;
+	width:100%;
+	left:0;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	text-align:center;
+}
+#otherOptions div.ui-collapsible  {
+	margin:auto;
+	margin-top:10px;
+	margin-bottom:10px;
+	width:90%;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+}
+#otherOptionsNote {
+	position:absolute;
+	bottom:0;
+	right:0;
+	background-color:#FFF;
+	-webkit-border-top-left-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	border-top-left-radius: 2px;
+	padding:5px;
+	font-size:10px;
+}
+#herdometer div {
+	font-size:12px;
+	padding:5px;
+	margin-top:10px;
+	display: block;
+	opacity:0.25;
+	background-color:#FFF;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	border:1px solid transparent;
+}
+#herdometer div.activeSheep {
+	opacity:1;
+	border:1px solid #000;
+}
+#herdometer div img{
+	vertical-align:middle;
+	margin-right:10px;
+	display:inline-block;
+}
+#herdometerData {
+	font-size:12px;
+	padding:5px;
+	margin-top:20px;
+	display: none;
+	background-color:#FFF;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	border:1px solid #000;
+}
+#localCount, #globalCount, .herdometerSite {
+	font-weight:bold;
 }
