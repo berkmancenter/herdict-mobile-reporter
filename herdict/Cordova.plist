@@ -19,7 +19,7 @@
 	<key>AllowInlineMediaPlayback</key>
 	<false/>
 	<key>OpenAllWhitelistURLsInWebView</key>
-	<true/>
+	<false/>
 	<key>ExternalHosts</key>
 	<array>
 		<string>www.herdict.org</string>

@@ -4,7 +4,7 @@
 		<!-- Basics -->
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
-		<title></title>
+		<title>Herdict</title>
 		<!-- PhoneGap -->
 		<script type="text/javascript" src="resources/js/cordova.js"></script>
 		<!-- Jquery -->
@@ -12,7 +12,7 @@
 		<!-- Jquery Mobile -->
 		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobile.css" />
 		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobileStructure.css" />
-		<link rel="stylesheet" href="resources/jQueryMobile/jQueryMobileTheme.css" />
+		<link rel="stylesheet" href="resources/jQueryMobile/herdict.min.css" />
 		<script type="text/javascript" src="resources/jQueryMobile/jQueryMobile.js"></script>
 		<!-- Our JS and CSS -->
 		<script type="text/javascript" src="resources/js/ChildBrowser.js"></script>
@@ -20,39 +20,49 @@
 		<link rel="stylesheet" href="resources/css/style.css" />
 	</head>
 	<body>
-		<div data-role="page">
+
+		<!-- INDEX -->
+
+		<div id="home" data-role="page">
 			<div data-role="header">
-				<a href="index.html" data-icon="home" data-iconpos="notext"></a>
+				<a href="http://herdict.org" target="_blank">online</a>
 				<h1>Herdict Mobile</h1>
-				<a href="#" data-icon="star" id="randomButton" data-iconpos="notext"></a>
 			</div>
 			<div data-role="content">
+				<a href="#walkthrough" data-role="button" id="reportHomeLink" data-transition="flip">
+					<img src="resources/img/home/report.png" />
+					<div>Report</div>
+				</a>
+				<a href="#view" data-role="button" data-transition="flip" id="queryHomeLink">
+					<img src="resources/img/home/query.png" />
+					<div>View Data</div>
+				</a>
+			</div>
+		</div>
+
+		<!-- REPORT -->
+
+		<div id="report" data-role="page">
+			<div data-role="header">
+				<a href="#home" data-icon="home" data-transition="flip" data-iconpos="notext"></a>
+				<h1>Herdict Reporter</h1>
+				<a href="#" data-icon="star" id="randomButton" onclick="toggleRandom()" data-iconpos="notext"></a>
+			</div>
+			<div data-role="content">
+				<a href="#listSelect" id="queueNotice" data-rel="dialog" data-transition="slidedown">You are currently evaluating websites from <span id="whichList"></span>'s list. Click here to change that.</a>
 				<div id="urlFieldContain">
-					<div>
-						<input id="urlField" placeholder="URL" type="url"/>
-					</div>
-					<div id="iframeHolder">
-						<iframe src=""></iframe>
-						<div id="iframeBlocker"></div>
-						<a href="#" onclick="openUpLink()" id="iframeLink">Interaction with this site has been disabled; click here to open in browser</a>
-					</div>
-					<div data-role="controlgroup" data-type="horizontal">
-						<a href="index.html" onclick="queueUp(true)" data-role="button">Accessible</a> 
-						<a href="index.html" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
-					</div>
+					<input id="urlField" placeholder="URL" type="url"/>
+					<a href="#" onclick="openUpLink()" data-role="button" data-iconpos="left" data-theme="a" data-icon="arrow-r" id="iframeLink"></a>
 					<script type="text/javascript">
-						var currentURL
+						var currentURL;
 						function updateIframeLocation(){
-							if (!hideFromReporter){
-								var url = $("#urlField")[0].value;
+							var url = $("#urlField")[0].value;
+							if (url != ""){
 								if (url.substr(0,7) != "http://"){
 									url = "http://" + url;
 								}
-								$("#urlFieldContain #iframeHolder iframe")[0].src = url;
 								currentURL = url;
-							}
-							else {
-								hideFromReporter = false;
+								openUpLink();
 							}
 						}
 						$("#urlField").on("change", updateIframeLocation);
@@ -61,44 +71,136 @@
 						}
 					</script>
 				</div>
-				<div data-role="fieldcontain">
-					<label for="categoriesField">Category</label>
-					<select id="categoriesField"></select>
+				<a href="#" class="accessSubmit" id="accessibleButton" onclick="queueUp(true)" data-role="button">Accessible</a> 
+				<a href="#" class="accessSubmit" id="inaccessibleButton" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
+				<div id="reported">
+					<div id="reportedTitle"><span id="numberReported">0</span> Sites Recently Reported</div>
+					<div id="reportedContent"></div>
 				</div>
-				<div data-role="collapsible" data-theme="a" data-content-theme="a">
-					<h3 id="locationHeader">Location</h3>
-					<p>
+				<div id="otherOptionsNote">Scroll down for more options</div>
+				<div id="otherOptions">
+					<div data-role="collapsible" data-theme="a" onclick="scrollToBottom()" data-content-theme="a">
+						<h3 id="locationHeader">Location</h3>
+						<p>
+							<div data-role="fieldcontain">
+								<select id="countriesField">
+									<option value="">Select Country</option>
+								</select>
+							</div>
+							<div data-role="fieldcontain">
+								<select id="locationsField">
+									<option value="">Select Location</option>
+								</select>
+							</div>
+							<div data-role="fieldcontain">
+								<label for="ispField">ISP</label>
+								<input id="ispField" placeholder="ISP" data-theme="c" type="text" />
+							</div>
+						</p>
+						<script type="text/javascript">
+							function updateLocationHeader(){
+								$("#locationHeader .ui-btn-text").html($("#countriesField")[0].value + " - " + $("#locationsField option:selected").html());
+							}
+							$("#countriesField").on("change", updateLocationHeader);
+							$("#locationsField").on("change", updateLocationHeader);
+						</script>
+					</div>
+					<div data-role="collapsible" data-theme="a" onclick="scrollToBottom()" data-content-theme="a">
+						<h3>Other</h3>
 						<div data-role="fieldcontain">
-							<label for="countriesField">Country</label>
-							<select id="countriesField"></select>
+							<select id="categoriesField">
+								<option value="">Select Category</option>
+							</select>
 						</div>
 						<div data-role="fieldcontain">
-							<label for="locationsField">Location</label>
-							<select id="locationsField"></select>
+							<select id="interestsField">
+								<option value="">Select Interest</option>
+							</select>
 						</div>
 						<div data-role="fieldcontain">
-							<label for="ispField">ISP</label>
-							<input id="ispField" placeholder="ISP" type="text" />
+							<select id="reasonsField">
+								<option value="">Select Reason</option>
+							</select>
 						</div>
-					</p>
+						<input id="commentField" data-theme="c" placeholder="Comments" type="text"/>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- LIST SELECT -->
+
+		<div id="listSelect" data-role="page" data-theme="c">
+			<div data-role="header">
+				<h1>Select List</h1>
+			</div>
+			<div data-role="content">
+				<ul id="listSelectList" data-role="listview">
+				</ul>
+			</div>
+		</div>
+
+		<!-- WALKTHROUGH -->
+
+		<div id="walkthrough" data-role="page">
+			<div data-role="header">
+				<h1>Walkthrough</h1>
+			</div>
+			<div data-role="content">
+				<div id="walkthroughWrapper">
+					<h1>Load a URL</h1>
+					<div>Simply type in a URL into the addressbar</div>
+					<img src="resources/img/walkthrough/addressBar.png" />
+					<div>...or enable random mode</div>
+					<img src="resources/img/walkthrough/random.png" />
+					<h1>Check out the site</h1>
+					<div>A browser will appear showing you the website</div>
+					<img src="resources/img/walkthrough/childBrowser.png" />
+					<div>When you are done discerning whether the site is accessible, simply hit 'done' on the bottom left</div>
+					<h1>Report Back</h1>
+					<div>Once you have tapped done, the app will return to the form. Fill it out with any details you want to share and then select 'accessible' or 'inaccessible' to submit. Thanks!</div>
+					<a href="#report" data-role="button" data-transition="flip" data-theme="b">Ok</a>
+					<a href="#report" data-role="button" data-transition="flip" id="neverShowWalkthrough" data-theme="b">Don't show this again</a>
 					<script type="text/javascript">
-						function updateLocationHeader(){
-							$("#locationHeader .ui-btn-text").html($("#countriesField")[0].value + " - " + $("#locationsField option:selected").html());
-						}
-						$("#countriesField").on("change", updateLocationHeader);
-						$("#locationsField").on("change", updateLocationHeader);
+						$("#neverShowWalkthrough").on("click", function (){
+							window.skipWalkthrough = "true";
+						});
 					</script>
 				</div>
-				<div data-role="collapsible" data-theme="a" data-content-theme="a">
-					<h3>Other</h3>
-					<div data-role="fieldcontain">
-						<label for="interestsField">Interests</label>
-						<select id="interestsField"></select>
+			</div>
+		</div>
+
+		<!-- VIEW -->
+
+		<div id="view" data-role="page">
+			<div data-role="header">
+				<a href="#home" data-icon="home" data-transition="flip" data-iconpos="notext"></a>
+				<h1>Herdometer</h1>
+			</div>
+			<div data-role="content">
+				<div id="urlCheckFieldContain">
+					<input id="urlCheckField" placeholder="URL" type="url"/>
+					<a href="#" onclick="checkLink()" data-role="button" data-iconpos="left" data-theme="a" data-icon="arrow-r" id="checkLink"></a>
+					<script type="text/javascript">
+						$("#urlCheckField").on("change", checkLink);
+					</script>
+				</div>
+				<div id="herdometer">
+					<div>
+						<img src="resources/img/herdometer/0.png" /> Not Enough Data
 					</div>
-					<div data-role="fieldcontain">
-						<label for="reasonsField">Reasons</label>
-						<select id="reasonsField"></select>
+					<div>
+						<img src="resources/img/herdometer/1.png" /> Accessible Everywhere
 					</div>
+					<div>
+						<img src="resources/img/herdometer/2.png" /> Inaccessible in other countries
+					</div>
+					<div>
+						<img src="resources/img/herdometer/3.png" /> Inaccessible in your country
+					</div>
+				</div>
+				<div id="herdometerData">
+					<span id="globalCount"></span> report(s) of <span class="herdometerSite"></span> being inaccessible globally. <br /><br /><span id="localCount"></span> report(s) of <span class="herdometerSite"></span> being inaccessible in your country.
 				</div>
 			</div>
 		</div>
