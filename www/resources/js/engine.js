@@ -122,36 +122,42 @@ function connectToQueue(){
 	return db;
 }
 
+var sitesReported = 0;
+
 function queueUp(accessibleBoolean){
-	// get data
-	var category = $("#categoriesField")[0].value;
-	var country = $("#countriesField")[0].value;
-	var location = $("#locationsField")[0].value;
-	var interest = $("#interestsField")[0].value;
-	var reason = $("#reasonsField")[0].value; 
-	var isp = $("#ispField")[0].value;
-	var url = prepareURL($("#urlField")[0].value);
-	var accessible = (accessibleBoolean ? 1 : 0);
-	var comment = $("#commentField")[0].value;
-	// store in db
-	var db = connectToQueue();
-	db.transaction(function (t){
-		t.executeSql("INSERT INTO toSendQueue (category, country, location, interest, reason, isp, url, accessible, comment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-			[category, country, location, interest, reason, isp, url, accessible, comment],
-			function (t, r){
-				// begin checking until I can dequeue
-				checkHerdict();
-			},
-			function (t, e){
-				alert(e.message);
-			}
-		);
-	});
-	if (!randomMode){
-		navigator.notification.alert("Your report has been recorded.", function (){}, "Thanks", "Ok")
+	if ($("#urlField")[0].value != ""){
+		// get data
+		var category = $("#categoriesField")[0].value;
+		var country = $("#countriesField")[0].value;
+		var location = $("#locationsField")[0].value;
+		var interest = $("#interestsField")[0].value;
+		var reason = $("#reasonsField")[0].value; 
+		var isp = $("#ispField")[0].value;
+		var url = prepareURL($("#urlField")[0].value);
+		var accessible = (accessibleBoolean ? 1 : 0);
+		var comment = $("#commentField")[0].value;
+		// store in db
+		var db = connectToQueue();
+		db.transaction(function (t){
+			t.executeSql("INSERT INTO toSendQueue (category, country, location, interest, reason, isp, url, accessible, comment) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+				[category, country, location, interest, reason, isp, url, accessible, comment],
+				function (t, r){
+					// begin checking until I can dequeue
+					checkHerdict();
+				},
+				function (t, e){
+					alert(e.message);
+				}
+			);
+		});
+		if (!randomMode){
+			navigator.notification.alert("Your report has been recorded.", function (){}, "Thanks", "Ok");
+		}
+		$("#reportedContent").prepend("<div class='" + (accessible ? "" : "in") + "accessible'>" + $("#urlField")[0].value + "</div>");
+		sitesReported++;
+		$("#numberReported").html(sitesReported.toString());
+		resetAllFields();
 	}
-	resetAllFields();
-	
 }
 function resetAllFields(){
 	$("#categoriesField option:selected").removeAttr("selected");
@@ -255,13 +261,19 @@ function loadRandomDomain(){
 		}
 		else {
 			var randomDomain = randomQueue.pop();
-			if (randomDomain.adult === true){
-				loadRandomDomain();
+			if (typeof(randomDomain) === 'undefined'){
+				navigator.notification.alert("You completed the entire " + lists[currentListId] + " list. Nice job!", function (){}, "Wow! Thanks!", "Ok")
+				toggleRandom();
 			}
 			else {
-				hideFromReporter = randomDomain.site.hideFromReporter;
-				$("#urlField")[0].value = randomDomain.site.url;
-				$("#urlField").trigger("change");
+				if (randomDomain.adult === true){
+					loadRandomDomain();
+				}
+				else {
+					hideFromReporter = randomDomain.site.hideFromReporter;
+					$("#urlField")[0].value = randomDomain.site.url;
+					$("#urlField").trigger("change");
+				}
 			}
 		}
 		// TODO:possibly delete?, tries to guess category based on categorization group
@@ -277,11 +289,13 @@ function toggleRandom(){
 	if (!randomMode){
 		randomMode = true;
 		$("#randomButton").addClass("toggledOn");
-		$('#dummySelectListDialogLink').click();
+		$('#queueNotice').css('display', 'block');
+		$('#queueNotice').click();
 	}
 	else {
 		randomMode = false;
 		$("#randomButton").removeClass("toggledOn");
+		$('#queueNotice').css('display', 'none');
 	}
 }
 
@@ -338,6 +352,7 @@ var listId;
 function selectList(givenId){
 	listId = givenId;
 	$('#listSelect').dialog('close');
+	$('#whichList').html(lists[listId]);
 	loadRandomDomain();
 }
 

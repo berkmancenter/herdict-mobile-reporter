@@ -25,7 +25,7 @@
 
 		<div id="home" data-role="page">
 			<div data-role="header">
-				<a href="http://herdict.org" target="_blank">www</a>
+				<a href="http://herdict.org" target="_blank">online</a>
 				<h1>Herdict Mobile</h1>
 			</div>
 			<div data-role="content">
@@ -49,7 +49,7 @@
 				<a href="#" data-icon="star" id="randomButton" onclick="toggleRandom()" data-iconpos="notext"></a>
 			</div>
 			<div data-role="content">
-				<a href="#listSelect" id="dummySelectListDialogLink" data-rel="dialog" data-transition="slidedown" style="display:none"></a>
+				<a href="#listSelect" id="queueNotice" data-rel="dialog" data-transition="slidedown">You are currently evaluating websites from <span id="whichList"></span>'s list. Click here to change that.</a>
 				<div id="urlFieldContain">
 					<input id="urlField" placeholder="URL" type="url"/>
 					<a href="#" onclick="openUpLink()" data-role="button" data-iconpos="left" data-theme="a" data-icon="arrow-r" id="iframeLink"></a>
@@ -57,11 +57,13 @@
 						var currentURL;
 						function updateIframeLocation(){
 							var url = $("#urlField")[0].value;
-							if (url.substr(0,7) != "http://"){
-								url = "http://" + url;
+							if (url != ""){
+								if (url.substr(0,7) != "http://"){
+									url = "http://" + url;
+								}
+								currentURL = url;
+								openUpLink();
 							}
-							currentURL = url;
-							openUpLink();
 						}
 						$("#urlField").on("change", updateIframeLocation);
 						function openUpLink(){
@@ -71,6 +73,10 @@
 				</div>
 				<a href="#" class="accessSubmit" id="accessibleButton" onclick="queueUp(true)" data-role="button">Accessible</a> 
 				<a href="#" class="accessSubmit" id="inaccessibleButton" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
+				<div id="reported">
+					<div id="reportedTitle"><span id="numberReported">0</span> Sites Recently Reported</div>
+					<div id="reportedContent"></div>
+				</div>
 				<div id="otherOptionsNote">Scroll down for more options</div>
 				<div id="otherOptions">
 					<div data-role="collapsible" data-theme="a" onclick="scrollToBottom()" data-content-theme="a">

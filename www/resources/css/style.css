@@ -230,3 +230,67 @@ body.ui-overlay-c.ui-mobile-viewport {
 #localCount, #globalCount, .herdometerSite {
 	font-weight:bold;
 }
+#queueNotice {
+	font-size:12px;
+	color:#000;
+	text-decoration:none;
+	display:none;
+	background-color: #FFF;
+	border:1px solid #000;
+	-webkit-border-top-left-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	border-top-left-radius: 2px;
+	padding:5px;
+	font-weight:normal;
+	margin-bottom:10px;
+}
+#whichList {
+	font-weight:bold;
+}
+#reported {
+	font-size:12px;
+	margin-top:20px;
+	background-color:#FFF;
+	box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	border:1px solid #000;
+	text-align: left;
+}
+#reportedTitle {
+	padding:5px;
+	font-size: 12px;
+	color:#FFF;
+	background: #666666 /*{a-bar-background-color}*/;
+	color: #FFFFFF /*{a-bar-color}*/;
+	text-shadow: 0 /*{a-bar-shadow-x}*/ 1px /*{a-bar-shadow-y}*/ 1px /*{a-bar-shadow-radius}*/ #5c5c5c /*{a-bar-shadow-color}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #6f6f6f /*{a-bar-background-start}*/), to( #5c5c5c /*{a-bar-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #6f6f6f /*{a-bar-background-start}*/, #5c5c5c /*{a-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #6f6f6f /*{a-bar-background-start}*/, #5c5c5c /*{a-bar-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #6f6f6f /*{a-bar-background-start}*/, #5c5c5c /*{a-bar-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #6f6f6f /*{a-bar-background-start}*/, #5c5c5c /*{a-bar-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #6f6f6f /*{a-bar-background-start}*/, #5c5c5c /*{a-bar-background-end}*/);
+}
+#numberReported {
+	font-weight: bold;
+}
+#reportedContent {
+	overflow:auto;
+	max-height:100px;
+}
+#reportedContent div{
+	border-bottom:1px dotted #000;
+	padding:5px;
+	color:#000;
+}
+#reportedContent .accessible{
+	background-color:#DDE4B5;
+}
+#reportedContent .inaccessible{
+	background-color:#F5E1CE;
+}
+#report [data-role="content"]{
+	padding-bottom:40px;
+}
