@@ -25,7 +25,7 @@
 
 		<div id="home" data-role="page">
 			<div data-role="header">
-				<a href="#" data-icon="arrow-u" data-iconpos="notext"></a>
+				<a href="http://herdict.org" target="_blank">www</a>
 				<h1>Herdict Mobile</h1>
 			</div>
 			<div data-role="content">
@@ -44,11 +44,12 @@
 
 		<div id="report" data-role="page">
 			<div data-role="header">
-				<a href="#home" data-icon="arrow-l" data-transition="flip" data-iconpos="notext"></a>
+				<a href="#home" data-icon="home" data-transition="flip" data-iconpos="notext"></a>
 				<h1>Herdict Reporter</h1>
-				<a href="#" data-icon="star" id="randomButton" data-iconpos="notext"></a>
+				<a href="#" data-icon="star" id="randomButton" onclick="toggleRandom()" data-iconpos="notext"></a>
 			</div>
 			<div data-role="content">
+				<a href="#listSelect" id="dummySelectListDialogLink" data-rel="dialog" data-transition="slidedown" style="display:none"></a>
 				<div id="urlFieldContain">
 					<input id="urlField" placeholder="URL" type="url"/>
 					<a href="#" onclick="openUpLink()" data-role="button" data-iconpos="left" data-theme="a" data-icon="arrow-r" id="iframeLink"></a>
@@ -121,6 +122,18 @@
 			</div>
 		</div>
 
+		<!-- LIST SELECT -->
+
+		<div id="listSelect" data-role="page" data-theme="c">
+			<div data-role="header">
+				<h1>Select List</h1>
+			</div>
+			<div data-role="content">
+				<ul id="listSelectList" data-role="listview">
+				</ul>
+			</div>
+		</div>
+
 		<!-- WALKTHROUGH -->
 
 		<div id="walkthrough" data-role="page">
@@ -155,7 +168,7 @@
 
 		<div id="view" data-role="page">
 			<div data-role="header">
-				<a href="#home" data-icon="arrow-l" data-transition="flip" data-iconpos="notext"></a>
+				<a href="#home" data-icon="home" data-transition="flip" data-iconpos="notext"></a>
 				<h1>Herdometer</h1>
 			</div>
 			<div data-role="content">

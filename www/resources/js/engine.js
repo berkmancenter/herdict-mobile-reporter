@@ -238,12 +238,14 @@ function checkHerdict(){
 var randomMode = false;
 var randomQueue;
 var hideFromReporter = false;
+var currentListId;
 
 function loadRandomDomain(){
 	if (randomMode){
-		if (typeof(randomQueue) == 'undefined'){
+		if (typeof(randomQueue) == 'undefined' || currentListId != listId){
+			currentListId = listId;
 			$.ajax({
-				url: 'http://herdict.podconsulting.net/ajax/lists/-1/pages',
+				url: 'http://herdict.podconsulting.net/ajax/lists/' + listId + '/pages',
 				success: function (data, status, jqxhr){
 					randomQueue = $.parseJSON(jqxhr.responseText);
 					randomQueue.reverse(); // so that the most important item is last and can easily be popped
@@ -251,14 +253,16 @@ function loadRandomDomain(){
 				},
 			});
 		}
-		var randomDomain = randomQueue.pop();
-		if (randomDomain.adult === true){
-			loadRandomDomain();
-		}
 		else {
-			hideFromReporter = randomDomain.site.hideFromReporter;
-			$("#urlField")[0].value = randomDomain.site.url;
-			$("#urlField").trigger("change");
+			var randomDomain = randomQueue.pop();
+			if (randomDomain.adult === true){
+				loadRandomDomain();
+			}
+			else {
+				hideFromReporter = randomDomain.site.hideFromReporter;
+				$("#urlField")[0].value = randomDomain.site.url;
+				$("#urlField").trigger("change");
+			}
 		}
 		// TODO:possibly delete?, tries to guess category based on categorization group
 		/*
@@ -269,21 +273,17 @@ function loadRandomDomain(){
 	}
 }
 
-function toggleRandom (){
+function toggleRandom(){
 	if (!randomMode){
 		randomMode = true;
 		$("#randomButton").addClass("toggledOn");
-		loadRandomDomain();
+		$('#dummySelectListDialogLink').click();
 	}
 	else {
 		randomMode = false;
 		$("#randomButton").removeClass("toggledOn");
 	}
 }
-
-$(document).ready(function (){
-	$("#randomButton").on("click", toggleRandom);
-});
 
 function prepareURL(url){
 	// strip http
@@ -328,6 +328,45 @@ function cleanJSON(json){
 function scrollToBottom(){
 	$(window).scrollTop($(document).height());
 }
+
+// *******************
+// *** select list ***
+// *******************
+
+var listId;
+
+function selectList(givenId){
+	listId = givenId;
+	$('#listSelect').dialog('close');
+	loadRandomDomain();
+}
+
+var lists = new Array();
+
+function loadLists(){
+	// TODO: Replace with API call when availiable
+	lists[-1] = "Herdict Web";
+	lists[2] = "EFF";
+	lists[3] = "Reporters without Borders";
+	doneLoadingLists();
+}
+
+function doneLoadingLists(){
+	for (key in lists){
+		$('#listSelectList').prepend("<li><a href='#' onclick='selectList(" + key + ")'>" + lists[key] + "</a></li>");
+	}
+}
+
+$(document).ready(function (){
+	loadLists();
+	$("#listSelect").one("pageinit", function (){
+		$('#listSelectList').listview('refresh');
+		$('#listSelect div[data-role="header"] a').on('click', function (){
+			toggleRandom();
+		});
+	});
+});
+
 
 // *******************
 // *** walkthrough ***
