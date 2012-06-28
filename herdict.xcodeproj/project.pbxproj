@@ -11,13 +11,11 @@
 		611F2A3B15939EDB00F59D3C /* ChildBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 611F2A3615939EDB00F59D3C /* ChildBrowserCommand.m */; };
 		611F2A3C15939EDB00F59D3C /* ChildBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 611F2A3815939EDB00F59D3C /* ChildBrowserViewController.m */; };
 		611F2A3D15939EDB00F59D3C /* ChildBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 611F2A3915939EDB00F59D3C /* ChildBrowserViewController.xib */; };
-		612AF97C159B93CF003ABA30 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF97B159B93CF003ABA30 /* icon-72@2x.png */; };
 		612AF985159B93EC003ABA30 /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF97E159B93EC003ABA30 /* icon-72.png */; };
 		612AF986159B93EC003ABA30 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF97F159B93EC003ABA30 /* icon-72@2x.png */; };
 		612AF987159B93EC003ABA30 /* icon-small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF980159B93EC003ABA30 /* icon-small-50.png */; };
 		612AF988159B93EC003ABA30 /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF981159B93EC003ABA30 /* icon-small.png */; };
 		612AF989159B93EC003ABA30 /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF982159B93EC003ABA30 /* icon-small@2x.png */; };
-		612AF98A159B93EC003ABA30 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF983159B93EC003ABA30 /* icon.png */; };
 		612AF98D159B9428003ABA30 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF98C159B9428003ABA30 /* icon.png */; };
 		612AF992159B97AE003ABA30 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF98E159B97AE003ABA30 /* Default-Landscape.png */; };
 		612AF993159B97AE003ABA30 /* Default-Landscape@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 612AF98F159B97AE003ABA30 /* Default-Landscape@2x.png */; };
@@ -52,6 +50,7 @@
 		613C83FE158F9C630076C6FE /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 613C83FD158F9C630076C6FE /* MainViewController.m */; };
 		613C8400158F9C630076C6FE /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 613C83FF158F9C630076C6FE /* MainViewController.xib */; };
 		613C840A158F9E210076C6FE /* www in Resources */ = {isa = PBXBuildFile; fileRef = 613C8409158F9E210076C6FE /* www */; };
+		614B32CD159C9AB8002B2EE6 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 614B32CC159C9AB8002B2EE6 /* iTunesArtwork.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,13 +60,11 @@
 		611F2A3715939EDB00F59D3C /* ChildBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserViewController.h; sourceTree = "<group>"; };
 		611F2A3815939EDB00F59D3C /* ChildBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserViewController.m; sourceTree = "<group>"; };
 		611F2A3915939EDB00F59D3C /* ChildBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildBrowserViewController.xib; sourceTree = "<group>"; };
-		612AF97B159B93CF003ABA30 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		612AF97E159B93EC003ABA30 /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-72.png"; path = "Resources/icons/icon-72.png"; sourceTree = "<group>"; };
 		612AF97F159B93EC003ABA30 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-72@2x.png"; path = "Resources/icons/icon-72@2x.png"; sourceTree = "<group>"; };
 		612AF980159B93EC003ABA30 /* icon-small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-small-50.png"; path = "Resources/icons/icon-small-50.png"; sourceTree = "<group>"; };
 		612AF981159B93EC003ABA30 /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-small.png"; path = "Resources/icons/icon-small.png"; sourceTree = "<group>"; };
 		612AF982159B93EC003ABA30 /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-small@2x.png"; path = "Resources/icons/icon-small@2x.png"; sourceTree = "<group>"; };
-		612AF983159B93EC003ABA30 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Resources/icons/icon.png; sourceTree = "<group>"; };
 		612AF98C159B9428003ABA30 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Resources/icons/icon.png; sourceTree = "<group>"; };
 		612AF98E159B97AE003ABA30 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Resources/splash/Default-Landscape.png"; sourceTree = "<group>"; };
 		612AF98F159B97AE003ABA30 /* Default-Landscape@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape@2x.png"; path = "Resources/splash/Default-Landscape@2x.png"; sourceTree = "<group>"; };
@@ -109,6 +106,8 @@
 		613C8402158F9C630076C6FE /* README */ = {isa = PBXFileReference; lastKnownFileType = text; name = README; path = Plugins/README; sourceTree = "<group>"; };
 		613C8403158F9C630076C6FE /* verify.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = verify.sh; sourceTree = "<group>"; };
 		613C8409158F9E210076C6FE /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		614B32CC159C9AB8002B2EE6 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		614B32CE159C9C16002B2EE6 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = herdict/Resources/icons/icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,7 +145,7 @@
 		613C83A0158F9C630076C6FE = {
 			isa = PBXGroup;
 			children = (
-				612AF97B159B93CF003ABA30 /* icon-72@2x.png */,
+				614B32CE159C9C16002B2EE6 /* icon.png */,
 				613C8409158F9E210076C6FE /* www */,
 				613C83CC158F9C630076C6FE /* herdict */,
 				613C83B1158F9C630076C6FE /* Frameworks */,
@@ -185,6 +184,7 @@
 		613C83CC158F9C630076C6FE /* herdict */ = {
 			isa = PBXGroup;
 			children = (
+				614B32CC159C9AB8002B2EE6 /* iTunesArtwork.png */,
 				613C83D5158F9C630076C6FE /* Cordova.framework */,
 				613C83D7158F9C630076C6FE /* Resources */,
 				613C83F8158F9C630076C6FE /* Classes */,
@@ -362,6 +362,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				612AF98D159B9428003ABA30 /* icon.png in Resources */,
 				613C83D1158F9C630076C6FE /* InfoPlist.strings in Resources */,
 				613C83DB158F9C630076C6FE /* Localizable.strings in Resources */,
 				613C83DF158F9C630076C6FE /* Localizable.strings in Resources */,
@@ -376,18 +377,16 @@
 				613C840A158F9E210076C6FE /* www in Resources */,
 				611F2A3A15939EDB00F59D3C /* ChildBrowser.bundle in Resources */,
 				611F2A3D15939EDB00F59D3C /* ChildBrowserViewController.xib in Resources */,
-				612AF97C159B93CF003ABA30 /* icon-72@2x.png in Resources */,
 				612AF985159B93EC003ABA30 /* icon-72.png in Resources */,
 				612AF986159B93EC003ABA30 /* icon-72@2x.png in Resources */,
 				612AF987159B93EC003ABA30 /* icon-small-50.png in Resources */,
 				612AF988159B93EC003ABA30 /* icon-small.png in Resources */,
 				612AF989159B93EC003ABA30 /* icon-small@2x.png in Resources */,
-				612AF98A159B93EC003ABA30 /* icon.png in Resources */,
-				612AF98D159B9428003ABA30 /* icon.png in Resources */,
 				612AF992159B97AE003ABA30 /* Default-Landscape.png in Resources */,
 				612AF993159B97AE003ABA30 /* Default-Landscape@2x.png in Resources */,
 				612AF994159B97AE003ABA30 /* Default-Portrait.png in Resources */,
 				612AF995159B97AE003ABA30 /* Default-Portrait@2x.png in Resources */,
+				614B32CD159C9AB8002B2EE6 /* iTunesArtwork.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
