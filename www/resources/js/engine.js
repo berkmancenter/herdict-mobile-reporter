@@ -110,7 +110,7 @@ function connectToBackupDB(){
 function connectToQueue(){
 	var db = window.openDatabase("toSend", "1.0", "Herdict report queue", 102400);
 	db.transaction(function (t){
-		t.executeSql("CREATE TABLE IF NOT EXISTS toSendQueue (id INTEGER PRIMARY KEY AUTOINCREMENT, category varchar(100), country varchar(3), location varchar(100), interest varchar(100), reason varchar(100), isp varchar(255), url varchar(4000),  accessible boolean, comment varchar(2000))",
+		t.executeSql("CREATE TABLE IF NOT EXISTS toSendQueue (id INTEGER PRIMARY KEY AUTOINCREMENT, category varchar(100), country varchar(3), location varchar(100), interest varchar(100), reason varchar(100), isp varchar(255), url varchar(4000),  accessible boolean, comment varchar(255))",
 		[],
 		function (t, r){
 
@@ -154,6 +154,9 @@ function queueUp(accessibleBoolean){
 			navigator.notification.alert("Your report has been recorded.", function (){}, "Thanks", "Ok");
 		}
 		$("#reportedContent").prepend("<div class='" + (accessible ? "" : "in") + "accessible'>" + $("#urlField")[0].value + "</div>");
+		if ($("#reportedContent div").length > 4){
+			$($("#reportedContent div")[4]).remove();
+		}
 		sitesReported++;
 		$("#numberReported").html(sitesReported.toString());
 		resetAllFields();
@@ -360,9 +363,12 @@ var lists = new Array();
 
 function loadLists(){
 	// TODO: Replace with API call when availiable
-	lists[-1] = "Herdict Web";
+	lists[-1] = "Herdict";
 	lists[2] = "EFF";
 	lists[3] = "Reporters without Borders";
+	lists[4] = "OpenNet Initiative";
+	lists[5] = "Twitter";
+	lists[6] = "Global Voices";
 	doneLoadingLists();
 }
 
@@ -457,6 +463,7 @@ function checkLink(){
 			$("#localCount").html(siteData.countryInaccessibleCount);
 			$(".herdometerSite").html($("#urlCheckField")[0].value);
 			$("#herdometerData").css('display', 'block');
+			$("#urlCheckField").blur();
 		}
 	});
 }

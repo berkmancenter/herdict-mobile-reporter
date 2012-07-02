@@ -145,6 +145,9 @@ body.ui-overlay-c.ui-mobile-viewport {
 		color-stop(1, rgb(175,231,44))
 	);
 	border-color:rgb(175,231,44);
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 }
 #inaccessibleButton {
 	background-image: linear-gradient(bottom, rgb(255,123,0) 0%, rgb(255,171,14) 100%);
@@ -161,6 +164,41 @@ body.ui-overlay-c.ui-mobile-viewport {
 		color-stop(1, rgb(255,171,14))
 	);
 	border-color:rgb(255,171,14);
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+#accessibleButton.ui-btn-down-c {
+	background-image: linear-gradient(bottom, rgb(55,122,22) 0%, rgb(82,189,32) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(55,122,22) 0%, rgb(82,189,32) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(55,122,22) 0%, rgb(82,189,32) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(55,122,22) 0%, rgb(82,189,32) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(55,122,22) 0%, rgb(82,189,32) 100%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, rgb(55,122,22)),
+		color-stop(1, rgb(82,189,32))
+	);
+	border-color: rgb(55,122,22);
+}
+#inaccessibleButton.ui-btn-down-c {
+	background-image: linear-gradient(bottom, rgb(196,91,0) 0%, rgb(255,119,0) 100%);
+	background-image: -o-linear-gradient(bottom, rgb(196,91,0) 0%, rgb(255,119,0) 100%);
+	background-image: -moz-linear-gradient(bottom, rgb(196,91,0) 0%, rgb(255,119,0) 100%);
+	background-image: -webkit-linear-gradient(bottom, rgb(196,91,0) 0%, rgb(255,119,0) 100%);
+	background-image: -ms-linear-gradient(bottom, rgb(196,91,0) 0%, rgb(255,119,0) 100%);
+
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, rgb(196,91,0)),
+		color-stop(1, rgb(255,119,0))
+	);
+	border-color: rgb(196,91,0);
 }
 #otherOptions {
 	position:absolute;
@@ -277,8 +315,7 @@ body.ui-overlay-c.ui-mobile-viewport {
 	font-weight: bold;
 }
 #reportedContent {
-	overflow:auto;
-	max-height:100px;
+
 }
 #reportedContent div{
 	border-bottom:1px dotted #000;
