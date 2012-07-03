@@ -18,6 +18,16 @@ $(document).ready(function (){
 			var clean = cleanJSON(jqxhr.responseText);
 			locationData = $.parseJSON(clean);
 			$("#ispField")[0].value = locationData.ispName;
+		},
+		error: function (){
+			// load null values into fields to prevent JS errors
+			locationData = {
+				countryShort:undefined,
+				ipTo:undefined,
+				countryLong:undefined,
+				ipFrom:undefined,
+				ispName:undefined
+			};
 		}
 	});
 	// Actually put data into select fields when open page
