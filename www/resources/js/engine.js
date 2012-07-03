@@ -265,7 +265,7 @@ function checkHerdict(){
 		},
 		error: function (){
 			// check again later, if not already going to do so
-			if (typeof(checkHerdict) === "undefined"){
+			if (typeof(checkingHerdict) === "undefined"){
 				checkingHerdict = setTimeout(checkHerdict, 60000);
 			}
 		} 
