@@ -341,3 +341,56 @@ body.ui-overlay-c.ui-mobile-viewport {
 #report [data-role="content"]{
 	padding-bottom:40px;
 }
+#topsitesContent .inaccessible, #topsitesContent .accessible{
+	display:none;
+}
+#topsitesContent .hover-tip-inaccessible {
+	color:rgb(255,123,0);
+	font-size:12px;
+}
+#topsitesContent .hover-tip-accessible {
+	color:rgb(82,189,32);
+	font-size:12px;
+}
+#topsitesContent .hover-tip {
+	font-weight:bold;
+}
+#topsitesContent .hover-tip em {
+	font-weight:normal;
+}
+#topsitesContent span {
+	color:#666;
+	font-style:italic;
+	display:block;
+	font-size:10px;
+}
+#topsitesContent a {
+	font-weight:bold;
+	margin-bottom:5px;
+	font-size:16px;
+	color:#333;
+}
+#topsitesContent ul{
+	list-style-type: none;
+	padding:0;
+	margin:0;
+}
+#topsitesContent li{
+	margin:5px;
+	padding:5px;
+	border:1px solid #000;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	background-color: #FFF;
+}
+#topsitesContent h2{
+	margin-top:0;
+	text-align:center;
+	display: block;
+}
+#errorPage {
+	font-size:20px;
+	padding:10px;
+	text-align:left;
+}

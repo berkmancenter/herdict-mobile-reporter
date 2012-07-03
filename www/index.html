@@ -33,7 +33,7 @@
 					<img src="resources/img/home/report.png" />
 					<div>Report</div>
 				</a>
-				<a href="#view" data-role="button" data-transition="flip" id="queryHomeLink">
+				<a href="#topsites" data-role="button" data-transition="flip" id="queryHomeLink">
 					<img src="resources/img/home/query.png" />
 					<div>View Data</div>
 				</a>
@@ -199,6 +199,36 @@
 				<div id="herdometerData">
 					<span id="globalCount"></span> report(s) of <span class="herdometerSite"></span> being inaccessible globally. <br /><br /><span id="localCount"></span> report(s) of <span class="herdometerSite"></span> being inaccessible in your country.
 				</div>
+			</div>
+		</div>
+
+		<!-- ERROR -->
+
+		<div id="error" data-role="page">
+			<div data-role="header">
+				<h1>Whoops!</h1>
+			</div>
+			<div data-role="content">
+				<div id="errorPage">
+					Sorry, but you need to be able to access herdict.org to get information on sites.
+					<a href="#home" data-role="button">Ok</a> 
+				</div>
+			</div>
+		</div>
+
+		<!-- TOP SITES -->
+
+		<div id="topsites" data-role="page">
+			<div data-role="header">
+				<a href="#home" data-icon="home" data-transition="flip" data-iconpos="notext"></a>
+				<h1>Top Sites</h1>
+				<a href="#view" data-transition="flip">Lookup</a>
+			</div>
+			<div data-role="content">
+				<div id="topsitesContent">
+
+				</div>
+				<a href="#view" data-role="button" data-transition="flip">Site Lookup</a>
 			</div>
 		</div>
 	</body>

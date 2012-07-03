@@ -10,29 +10,37 @@ $(document).bind( "mobileinit", function() {
 
 // Load field options
 var toLoad = ["categories", "countries", "locations", "interests", "reasons"];
-var locationData;
-$(document).ready(function (){
+var locationData = {
+	countryShort:undefined,
+	ipTo:undefined,
+	countryLong:undefined,
+	ipFrom:undefined,
+	ispName:undefined
+};
+
+// gets translation data
+function updateTranslationData(){
 	$.ajax({
 		url: 'http://www.herdict.org/action/ajax/plugin/init-currentLocation/',
 		success: function (data, status, jqxhr){
+			// parse data
 			var clean = cleanJSON(jqxhr.responseText);
 			locationData = $.parseJSON(clean);
+			// update fields
 			$("#ispField")[0].value = locationData.ispName;
-		},
-		error: function (){
-			// load null values into fields to prevent JS errors
-			locationData = {
-				countryShort:undefined,
-				ipTo:undefined,
-				countryLong:undefined,
-				ipFrom:undefined,
-				ispName:undefined
-			};
 		}
 	});
+	// update later
+	setTimeout(updateTranslationData, 6000);
+}
+
+// key init data
+$(document).ready(function (){
+	updateTranslationData();
 	// Actually put data into select fields when open page
 	$("#report").one("pageinit", loadOtherFields);
 });
+
 // load the other (non-isp and non-country) fields
 function loadOtherFields(){
 	// init fields
@@ -554,4 +562,27 @@ $(document).one("pageshow", function (){
 	resizeHome();
 	// stops odd scroll bar glitch
 	resizeHome();
+});
+
+
+// *******************
+// ** GET TOP SITES **
+// *******************
+
+function getLargestSites(){
+	$.ajax({
+		url: 'http://www.herdict.org/explore/module/topsites?fc=' + locationData.countryShort,
+		success: function (data, status, jqxhr){
+			// convert to DOM object so I can traverse it for good parts
+			var DOMObj = $('<div>' + jqxhr.responseText + '</div>');
+			$("#topsitesContent").html(DOMObj.children("div")[0].innerHTML);
+			$("#topsitesContent").children("a").attr("href", "#");
+		},
+		error: function (){
+			$.mobile.changePage("#error");
+		}
+	});
+}
+$(document).ready(function (){
+	$("#topsites").on("pageshow", getLargestSites);
 });
