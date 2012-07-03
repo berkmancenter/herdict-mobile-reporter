@@ -44,6 +44,7 @@ body.ui-overlay-c.ui-mobile-viewport {
 	margin:0;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 	border-left-width:0;
 	-webkit-border-top-left-radius: 0;
 	-webkit-border-bottom-left-radius: 0;
@@ -78,12 +79,14 @@ body.ui-overlay-c.ui-mobile-viewport {
 	padding-left:0;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 }
 #urlField, #urlCheckField {
 	border:1px solid #000;
 	margin:0;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 	padding-right:40px;
 	width:100%;
 	background-color:#FFF;
@@ -101,6 +104,7 @@ body.ui-overlay-c.ui-mobile-viewport {
 	width:100%;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 }
 #walkthroughWrapper img {
 	max-width:90%;
@@ -120,6 +124,7 @@ body.ui-overlay-c.ui-mobile-viewport {
 #reportHomeLink, #queryHomeLink {
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 	margin:0;
 	display:inline-block;
 	opacity:0.75;
@@ -208,6 +213,7 @@ body.ui-overlay-c.ui-mobile-viewport {
 	left:0;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 	text-align:center;
 }
 #otherOptions div.ui-collapsible  {
@@ -217,6 +223,7 @@ body.ui-overlay-c.ui-mobile-viewport {
 	width:90%;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 }
 #otherOptionsNote {
 	position:absolute;
@@ -238,6 +245,7 @@ body.ui-overlay-c.ui-mobile-viewport {
 	background-color:#FFF;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
@@ -260,6 +268,7 @@ body.ui-overlay-c.ui-mobile-viewport {
 	background-color:#FFF;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
@@ -291,6 +300,7 @@ body.ui-overlay-c.ui-mobile-viewport {
 	background-color:#FFF;
 	box-sizing:border-box;
 	-moz-box-sizing:border-box;
+	-webkit-box-sizing:border-box;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;

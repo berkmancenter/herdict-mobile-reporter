@@ -2,12 +2,13 @@
 // *** reporter ******
 // *******************
 
+// Allow XSS
 $(document).bind( "mobileinit", function() {
-	// allow cross site requests
     $.mobile.allowCrossDomainPages = true;
     $.support.cors = true;
 });
 
+// Load field options
 var toLoad = ["categories", "countries", "locations", "interests", "reasons"];
 var locationData;
 $(document).ready(function (){
@@ -17,15 +18,18 @@ $(document).ready(function (){
 			var clean = cleanJSON(jqxhr.responseText);
 			locationData = $.parseJSON(clean);
 			$("#ispField")[0].value = locationData.ispName;
-			$("#report").one("pageinit", loadOtherFields);
 		}
 	});
 });
+// Actually put data into select fields when open page
+$("#report").one("pageinit", loadOtherFields);
+// load the other (non-isp and non-country) fields
 function loadOtherFields(){
 	// init fields
 	for (var i = 0; i < toLoad.length; i++){
 		$.ajax({
 			url: 'http://www.herdict.org/action/ajax/plugin/init-'+toLoad[i]+'/',
+			// test if we can access herdict, if we can use its data
 			success: (function (section){
 				return (function(data, status, jqxhr) {
 					// actually populate field
@@ -41,12 +45,14 @@ function loadOtherFields(){
 					});
 				});
 			})(toLoad[i]),
+			// if we can't, then check backup and fallback on local file system
 			error: (function (section){
 				return (function(jqxhr, status, errThrown) {
 					// query db
 					var db = connectToBackupDB();
 					db.transaction(function (t){
 						t.executeSql("SELECT * FROM backup WHERE keyTxt = ?", [section], function (transaction, result){
+							// check if DB has data
 							if (result.rows.length > 0){
 								// load data in
 								var fields = $.parseJSON(result.rows.item(0).valueTxt);
@@ -55,6 +61,7 @@ function loadOtherFields(){
 								}
 								loadedData(section);
 							}
+							// Data never stored in DB, so fallback on local storage
 							else {
 								$.ajax({
 									url: 'fallbackData/'+section+'.txt',
@@ -76,8 +83,9 @@ function loadOtherFields(){
 	}
 }
 
-var countriesLoaded = 1; // the default "select country"
+var countriesLoaded = 1; // the default "select country" option is already poulated
 
+// actually fills in select value
 function populateFields(section, obj){
 	$("#"+section+"Field").append('<option value="' + obj.value + '">' + obj.label + '</option>');
 	if (section == "countries"){
@@ -92,6 +100,7 @@ function populateFields(section, obj){
 
 var fieldsLoaded = 0;
 
+// All data has been loaded into fields
 function loadedData(sectionLoaded){
 	fieldsLoaded++;
 	if (fieldsLoaded == toLoad.length){
@@ -99,6 +108,7 @@ function loadedData(sectionLoaded){
 	}
 }
 
+// Stores data incase can't connect to herdict
 function connectToBackupDB(){
 	var db = window.openDatabase("fallbacks", "1.0", "Herdict fallbacks incase herdict is inaccessible", 102400);
 	db.transaction(function (t){
@@ -107,6 +117,7 @@ function connectToBackupDB(){
 	return db;
 }
 
+// queue of sites to be reported
 function connectToQueue(){
 	var db = window.openDatabase("toSend", "1.0", "Herdict report queue", 102400);
 	db.transaction(function (t){
@@ -124,6 +135,7 @@ function connectToQueue(){
 
 var sitesReported = 0;
 
+// add site to queue
 function queueUp(accessibleBoolean){
 	if ($("#urlField")[0].value != ""){
 		// get data
@@ -162,6 +174,8 @@ function queueUp(accessibleBoolean){
 		resetAllFields();
 	}
 }
+
+// cleans the report fields 
 function resetAllFields(){
 	$("#categoriesField option:selected").removeAttr("selected");
 	$("#categoriesField").selectmenu("refresh");
@@ -173,6 +187,8 @@ function resetAllFields(){
 	$("#commentField")[0].value = "";
 	$(".accessSubmit").removeClass("ui-btn-active");
 }
+
+// empties queue and submits data
 function deQueue(){
 	var db = connectToQueue();
 	db.transaction(function (t){
@@ -205,6 +221,7 @@ function deQueue(){
 	 loadRandomDomain();
 }
 
+// see if data needs to be sent
 function checkIfDequeue(){
 	var db = connectToQueue();
 	db.transaction(function (t){
@@ -219,12 +236,15 @@ function checkIfDequeue(){
 	});
 }
 
+// check if data needs to be sent when app opens
 $(document).ready(function (){
 	checkIfDequeue();
 });
 
+// prevent us form dual caling deQueue
 var checkingHerdict;
 
+// check to see if herdit is accessible
 function checkHerdict(){
 	checkingHerdict = undefined;
 	// check if site is accessible, if so, dequeue 
@@ -243,14 +263,16 @@ function checkHerdict(){
 }
 
 // functions for domain roulette
-
 var randomMode = false;
 var randomQueue;
 var hideFromReporter = false;
 var currentListId;
 
+// loads next item from the queue
 function loadRandomDomain(){
+	// only do this if random mode enabled
 	if (randomMode){
+		// load queue if need be
 		if (typeof(randomQueue) == 'undefined' || currentListId != listId){
 			currentListId = listId;
 			$.ajax({
@@ -262,6 +284,7 @@ function loadRandomDomain(){
 				},
 			});
 		}
+		// already loaded, so all that needs to occur is to show site
 		else {
 			var randomDomain = randomQueue.pop();
 			if (typeof(randomDomain) === 'undefined'){
@@ -269,6 +292,7 @@ function loadRandomDomain(){
 				toggleRandom();
 			}
 			else {
+				// skip explicit sites
 				if (randomDomain.adult === true){
 					loadRandomDomain();
 				}
@@ -288,6 +312,7 @@ function loadRandomDomain(){
 	}
 }
 
+// turn random mode on/off
 function toggleRandom(){
 	if (!randomMode){
 		randomMode = true;
@@ -302,6 +327,7 @@ function toggleRandom(){
 	}
 }
 
+// rot13 encode and strip any excess paths or protocols
 function prepareURL(url){
 	// strip http
 	if (url.substr(0,7) == "http://"){
@@ -329,7 +355,7 @@ function prepareURL(url){
 	// that's all folks
 	return url;
 }
-
+// herdict returns bad JSON, strip the excess parens
 function cleanJSON(json){
 	var start = 0;
 	var end = json.length;
@@ -342,6 +368,7 @@ function cleanJSON(json){
 	return json.slice(start, end);
 }
 
+// when open extra-options menu, must 
 function scrollToBottom(){
 	$(window).scrollTop($(document).height());
 }
@@ -352,6 +379,7 @@ function scrollToBottom(){
 
 var listId;
 
+// chose a list to enable random mode with
 function selectList(givenId){
 	listId = givenId;
 	$('#listSelect').dialog('close');
@@ -361,6 +389,7 @@ function selectList(givenId){
 
 var lists = new Array();
 
+// a list of lists
 function loadLists(){
 	// TODO: Replace with API call when availiable
 	lists[-1] = "Herdict";
@@ -372,12 +401,14 @@ function loadLists(){
 	doneLoadingLists();
 }
 
+// actually add lists to select menu
 function doneLoadingLists(){
 	for (key in lists){
 		$('#listSelectList').prepend("<li><a href='#' onclick='selectList(" + key + ")'>" + lists[key] + "</a></li>");
 	}
 }
 
+// make it so not choosing a list disables random mode
 $(document).ready(function (){
 	loadLists();
 	$("#listSelect").one("pageinit", function (){
@@ -393,6 +424,7 @@ $(document).ready(function (){
 // *** walkthrough ***
 // *******************
 
+// a little bit of abstraction so that the variable skipWalkthrough is persistent
 Object.defineProperty(window, "skipWalkthrough", {
 	get : function(){
         if (window.localStorage.getItem("skipWalkthrough") === null){
@@ -407,6 +439,7 @@ Object.defineProperty(window, "skipWalkthrough", {
     configurable : true
 });
 
+// skips walkthrough if that is setting
 $(document).on("pagebeforechange", function (e, data){
 	if (typeof(data.toPage) === "object"){
 		if (data.toPage.is($("#walkthrough"))){
@@ -449,6 +482,7 @@ function onLinkClick(){
 // *** viewer ********
 // *******************
 
+// checks accessibility of link
 function checkLink(){
 	var currentURL = $("#urlCheckField")[0].value;
 	currentURL = prepareURL(currentURL);
@@ -472,6 +506,7 @@ function checkLink(){
 // ***** home ********
 // *******************
 
+// makes it so both home buttons occupy corrct area based on device orientation
 function resizeHome(){
 	// grab basics
 	var availiableHeight = $(window).height();
