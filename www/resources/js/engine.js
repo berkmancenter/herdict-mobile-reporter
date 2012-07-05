@@ -19,7 +19,7 @@ var locationData = {
 };
 
 // gets translation data
-function updateTranslationData(){
+function updateLocationData(){
 	$.ajax({
 		url: 'http://www.herdict.org/action/ajax/plugin/init-currentLocation/',
 		success: function (data, status, jqxhr){
@@ -31,12 +31,12 @@ function updateTranslationData(){
 		}
 	});
 	// update later
-	setTimeout(updateTranslationData, 6000);
+	setTimeout(updateLocationData, 6000);
 }
 
 // key init data
 $(document).ready(function (){
-	updateTranslationData();
+	updateLocationData();
 	// Actually put data into select fields when open page
 	$("#report").one("pageinit", loadOtherFields);
 });
@@ -500,7 +500,7 @@ function onLinkClick(){
 // *** viewer ********
 // *******************
 
-// checks accessibility of link
+// checks accessibility of url
 function checkLink(){
 	var currentURL = $("#urlCheckField")[0].value;
 	currentURL = prepareURL(currentURL);
