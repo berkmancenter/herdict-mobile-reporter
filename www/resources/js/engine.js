@@ -31,7 +31,7 @@ function updateLocationData(){
 		}
 	});
 	// update later
-	setTimeout(updateLocationData, 6000);
+	setTimeout(updateLocationData, 60000);
 }
 
 // key init data
