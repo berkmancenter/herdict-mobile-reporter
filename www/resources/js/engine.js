@@ -577,6 +577,7 @@ function getLargestSites(){
 			var DOMObj = $('<div>' + jqxhr.responseText + '</div>');
 			$("#topsitesContent").html(DOMObj.children("div")[0].innerHTML);
 			$("#topsitesContent").children("a").attr("href", "#");
+			$("#topsitesContent").prepend("<div id='topsiteNote'>(In your country)</div>");
 		},
 		error: function (){
 			$.mobile.changePage("#error");

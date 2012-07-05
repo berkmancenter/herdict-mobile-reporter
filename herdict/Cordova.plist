@@ -22,8 +22,11 @@
 	<false/>
 	<key>ExternalHosts</key>
 	<array>
-		<string>www.herdict.org</string>
 		<string>*</string>
+		<string>herdict.podconsulting.net</string>
+		<string>www.herdict.org</string>
+		<string>herdict.org</string>
+		<string>dev2.herdict.org</string>
 	</array>
 	<key>Plugins</key>
 	<dict>

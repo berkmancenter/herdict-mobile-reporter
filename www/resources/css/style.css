@@ -389,6 +389,11 @@ body.ui-overlay-c.ui-mobile-viewport {
 	text-align:center;
 	display: block;
 }
+#topsiteNote {
+	font-size:10px;
+	color:#333;
+	text-align:center;
+}
 #errorPage {
 	font-size:20px;
 	padding:10px;
