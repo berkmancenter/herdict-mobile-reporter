@@ -569,7 +569,7 @@ $(document).one("pageshow", function (){
 // ** GET TOP SITES **
 // *******************
 
-function getLargestSites(){
+function getTopSites(){
 	$.ajax({
 		url: 'http://www.herdict.org/explore/module/topsites?fc=' + locationData.countryShort,
 		success: function (data, status, jqxhr){
@@ -585,5 +585,5 @@ function getLargestSites(){
 	});
 }
 $(document).ready(function (){
-	$("#topsites").on("pageshow", getLargestSites);
+	$("#topsites").on("pageshow", getTopSites);
 });
