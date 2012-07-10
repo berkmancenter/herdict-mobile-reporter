@@ -408,14 +408,27 @@ var lists = new Array();
 
 // a list of lists
 function loadLists(){
-	// TODO: Replace with API call when availiable
+	// clear
+	$('#listSelectList').html('');
+	// add default
 	lists[-1] = "Herdict";
-	lists[2] = "EFF";
-	lists[3] = "Reporters without Borders";
-	lists[4] = "OpenNet Initiative";
-	lists[5] = "Twitter";
-	lists[6] = "Global Voices";
-	doneLoadingLists();
+	$.ajax({
+		url: 'http://dev2.herdict.org/ajax/lists/sponsored',
+		success: function (data, status, jqxhr){
+			var remoteLists = $.parseJSON(jqxhr.responseText);
+			while (remoteLists.length > 0){
+				var currentList = remoteLists.pop();
+				lists[parseInt(currentList.id) + 1] = currentList.user.username;
+			}
+			doneLoadingLists();
+		},
+		error: function (){
+			navigator.notification.alert("You must be able to access herdict.org to select lists.", function (){
+				// as if they closed it
+				$('#listSelect div[data-role="header"] a').trigger('click');
+			}, "Sorry!", "Ok");
+		}
+	});
 }
 
 // actually add lists to select menu
@@ -423,13 +436,16 @@ function doneLoadingLists(){
 	for (var key in lists){
 		$('#listSelectList').prepend("<li><a href='#' onclick='selectList(" + key + ")'>" + lists[key] + "</a></li>");
 	}
+	$('#listSelectList').listview('refresh');
 }
 
 // make it so not choosing a list disables random mode
 $(document).ready(function (){
-	loadLists();
-	$("#listSelect").one("pageinit", function (){
-		$('#listSelectList').listview('refresh');
+	$("#listSelect").on("pageshow", function (){
+		loadLists();
+	});
+	// only bind this once
+	$("#listSelect").one("pageshow", function (){
 		$('#listSelect div[data-role="header"] a').on('click', function (){
 			toggleRandom();
 		});
