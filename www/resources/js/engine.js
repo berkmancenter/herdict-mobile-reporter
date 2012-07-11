@@ -283,41 +283,25 @@ function checkHerdict(){
 var randomMode = false;
 var randomQueue;
 var hideFromReporter = false;
-var currentListId;
 
 // loads next item from the queue
 function loadRandomDomain(){
 	// only do this if random mode enabled
 	if (randomMode){
-		// load queue if need be
-		if (typeof(randomQueue) == 'undefined' || currentListId != listId){
-			currentListId = listId;
-			$.ajax({
-				url: 'http://herdict.podconsulting.net/ajax/lists/' + listId + '/pages',
-				success: function (data, status, jqxhr){
-					randomQueue = $.parseJSON(jqxhr.responseText);
-					randomQueue.reverse(); // so that the most important item is last and can easily be popped
-					loadRandomDomain();
-				}
-			});
+		var randomDomain = randomQueue.shift();
+		if (typeof(randomDomain) === 'undefined'){
+			navigator.notification.alert("You completed the entire " + lists[listId] + " list. Nice job!", function (){}, "Wow! Thanks!", "Ok");
+			toggleRandom();
 		}
-		// already loaded, so all that needs to occur is to show site
 		else {
-			var randomDomain = randomQueue.pop();
-			if (typeof(randomDomain) === 'undefined'){
-				navigator.notification.alert("You completed the entire " + lists[currentListId] + " list. Nice job!", function (){}, "Wow! Thanks!", "Ok");
-				toggleRandom();
+			// skip explicit sites
+			if (randomDomain.page.adult === true){
+				loadRandomDomain();
 			}
 			else {
-				// skip explicit sites
-				if (randomDomain.adult === true){
-					loadRandomDomain();
-				}
-				else {
-					hideFromReporter = randomDomain.site.hideFromReporter;
-					$("#urlField")[0].value = randomDomain.site.url;
-					$("#urlField").trigger("change");
-				}
+				hideFromReporter = randomDomain.page.site.hideFromReporter;
+				$("#urlField")[0].value = randomDomain.page.site.url;
+				$("#urlField").trigger("change");
 			}
 		}
 		// TODO:possibly delete?, tries to guess category based on categorization group
@@ -398,6 +382,9 @@ var listId;
 
 // chose a list to enable random mode with
 function selectList(givenId){
+	// load list
+	randomQueue = remoteLists[givenId].userListPages;
+	// ui stuff
 	listId = givenId;
 	$('#listSelect').dialog('close');
 	$('#whichList').html(lists[listId]);
@@ -405,22 +392,33 @@ function selectList(givenId){
 }
 
 var lists = new Array();
+var remoteLists;
 
 // a list of lists
 function loadLists(){
 	// clear
 	$('#listSelectList').html('');
-	// add default
-	lists[-1] = "Herdict";
 	$.ajax({
 		url: 'http://dev2.herdict.org/ajax/lists/sponsored',
 		success: function (data, status, jqxhr){
-			var remoteLists = $.parseJSON(jqxhr.responseText);
-			while (remoteLists.length > 0){
-				var currentList = remoteLists.pop();
-				lists[parseInt(currentList.id) + 1] = currentList.user.username;
-			}
-			doneLoadingLists();
+			remoteLists = $.parseJSON(jqxhr.responseText);
+				$.ajax({
+					url: 'http://dev2.herdict.org/ajax/lists/herdict',
+					success: function (data, status, jqxhr){
+						remoteLists = remoteLists.concat($.parseJSON(jqxhr.responseText));
+						for (var i = 0; i < remoteLists.length; i++){
+							var currentList = remoteLists[i];
+							lists[i] = currentList.user.username;
+						}
+						doneLoadingLists();
+					},
+					error: function (){
+						navigator.notification.alert("You must be able to access herdict.org to select lists.", function (){
+							// as if they closed it
+							$('#listSelect div[data-role="header"] a').trigger('click');
+						}, "Sorry!", "Ok");
+					}
+			});
 		},
 		error: function (){
 			navigator.notification.alert("You must be able to access herdict.org to select lists.", function (){
