@@ -34,9 +34,3 @@ Herdict mobile reporter was designed as an Apache Cordova for iOS application an
 6. (With wifi on) Click view, it should show a list of sites top reported in your country. Proceed to lookup a specific site and search a site, it should provide you with accessibility results.
 
 7. On the homescreen click 'website', it should open up a browser and bring you to herdict.org
-
-## License
-
-This application is released under a GPLv3 license.
-
-2012 President and Fellows of Harvard College
