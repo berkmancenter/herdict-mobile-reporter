@@ -2,13 +2,13 @@
 // *** reporter ******
 // *******************
 
-// Allow XSS
+// ensure we can make cross site requests
 $(document).bind( "mobileinit", function() {
     $.mobile.allowCrossDomainPages = true;
     $.support.cors = true;
 });
 
-// Load field options
+// All the data we must load
 var toLoad = ["categories", "countries", "locations", "interests", "reasons"];
 var locationData = {
 	countryShort:undefined,
@@ -18,7 +18,9 @@ var locationData = {
 	ispName:undefined
 };
 
-// gets translation data
+/* 
+ * Fetches location data on a recurring basis
+ */
 function updateLocationData(){
 	$.ajax({
 		url: 'http://www.herdict.org/action/ajax/plugin/init-currentLocation/',
@@ -34,14 +36,16 @@ function updateLocationData(){
 	setTimeout(updateLocationData, 60000);
 }
 
-// key init data
+// load data
 $(document).ready(function (){
 	updateLocationData();
 	// Actually put data into select fields when open page
 	$("#report").one("pageinit", loadOtherFields);
 });
 
-// load the other (non-isp and non-country) fields
+/*
+ *load the other (non-isp and non-country) fields
+ */
 function loadOtherFields(){
 	// init fields
 	for (var i = 0; i < toLoad.length; i++){
@@ -103,7 +107,12 @@ function loadOtherFields(){
 
 var countriesLoaded = 1; // the default "select country" option is already poulated
 
-// actually fills in select value
+/*
+ * actually fills in select value
+ *
+ * section - what section needs to be update
+ * obj - the result object {'value', 'label'}
+ */
 function populateFields(section, obj){
 	$("#"+section+"Field").append('<option value="' + obj.value + '">' + obj.label + '</option>');
 	if (section == "countries"){
@@ -118,7 +127,11 @@ function populateFields(section, obj){
 
 var fieldsLoaded = 0;
 
-// All data has been loaded into fields
+/*
+ * Check if all th edata has been loaded
+ * 
+ * sectionLoaded - which specific piece of data 
+ */
 function loadedData(sectionLoaded){
 	fieldsLoaded++;
 	if (fieldsLoaded == toLoad.length){
@@ -126,7 +139,9 @@ function loadedData(sectionLoaded){
 	}
 }
 
-// Stores data incase can't connect to herdict
+/*
+ * Connects to backup database to store results in case herdict later becomes inaccessible
+ */
 function connectToBackupDB(){
 	var db = window.openDatabase("fallbacks", "1.0", "Herdict fallbacks incase herdict is inaccessible", 102400);
 	db.transaction(function (t){
@@ -135,7 +150,9 @@ function connectToBackupDB(){
 	return db;
 }
 
-// queue of sites to be reported
+/*
+ * Connects to queue incase herdict is inaccessible
+ */
 function connectToQueue(){
 	var db = window.openDatabase("toSend", "1.0", "Herdict report queue", 102400);
 	db.transaction(function (t){
@@ -153,7 +170,11 @@ function connectToQueue(){
 
 var sitesReported = 0;
 
-// add site to queue
+/*
+ * Add site to queue
+ *
+ * Accessible Boolean - whether the tested site was accessible
+ */
 function queueUp(accessibleBoolean){
 	if ($("#urlField")[0].value != ""){
 		// get data
@@ -193,7 +214,9 @@ function queueUp(accessibleBoolean){
 	}
 }
 
-// cleans the report fields 
+/*
+ * Resets all the reporter input fields
+ */
 function resetAllFields(){
 	$("#categoriesField option:selected").removeAttr("selected");
 	$("#categoriesField").selectmenu("refresh");
@@ -206,7 +229,9 @@ function resetAllFields(){
 	$(".accessSubmit").removeClass("ui-btn-active");
 }
 
-// empties queue and submits data
+/*
+ * DeQueue's data
+ */
 function deQueue(){
 	var db = connectToQueue();
 	db.transaction(function (t){
@@ -238,7 +263,9 @@ function deQueue(){
 	 loadRandomDomain();
 }
 
-// see if data needs to be sent
+/*
+ * Check id there is data in the queue
+ */
 function checkIfDequeue(){
 	var db = connectToQueue();
 	db.transaction(function (t){
@@ -261,7 +288,9 @@ $(document).ready(function (){
 // prevent us form dual caling deQueue
 var checkingHerdict;
 
-// check to see if herdit is accessible
+/*
+ * Ccheck if herdict is accessible
+ */
 function checkHerdict(){
 	checkingHerdict = undefined;
 	// check if site is accessible, if so, dequeue 
@@ -284,7 +313,9 @@ var randomMode = false;
 var randomQueue;
 var hideFromReporter = false;
 
-// loads next item from the queue
+/*
+ * Loads site to test from the list
+ */
 function loadRandomDomain(){
 	// only do this if random mode enabled
 	if (randomMode){
@@ -313,7 +344,9 @@ function loadRandomDomain(){
 	}
 }
 
-// turn random mode on/off
+/*
+ * Toggles random mode (when you are searching from list
+ */
 function toggleRandom(){
 	if (!randomMode){
 		randomMode = true;
@@ -328,7 +361,11 @@ function toggleRandom(){
 	}
 }
 
-// rot13 encode and strip any excess paths or protocols
+/*
+ * ROT13 Encode, strip any unnecessary data
+ *
+ * url - url to encode
+ */
 function prepareURL(url){
 	// strip http
 	if (url.substr(0,7) == "http://"){
@@ -356,7 +393,11 @@ function prepareURL(url){
 	// that's all folks
 	return url;
 }
-// herdict returns bad JSON, strip the excess parens
+/*
+ * Herdict sometimes returns bad json (surrounded in parens), this fixes it
+ * 
+ * json - dirty json
+ */
 function cleanJSON(json){
 	var start = 0;
 	var end = json.length;
@@ -369,7 +410,9 @@ function cleanJSON(json){
 	return json.slice(start, end);
 }
 
-// when open extra-options menu, must 
+/*
+ * Scrolls to bottom of page
+ */
 function scrollToBottom(){
 	$(window).scrollTop($(document).height());
 }
@@ -380,7 +423,11 @@ function scrollToBottom(){
 
 var listId;
 
-// chose a list to enable random mode with
+/*
+ * Selects a list ot start reporting from
+ * 
+ * givenId - ID of selected list
+ */
 function selectList(givenId){
 	// load list
 	randomQueue = remoteLists[givenId].userListPages;
@@ -394,7 +441,9 @@ function selectList(givenId){
 var lists = new Array();
 var remoteLists;
 
-// a list of lists
+/*
+ * Loads list of lists
+ */
 function loadLists(){
 	// clear
 	$('#listSelectList').html('<li>Loading...</li>');
@@ -430,7 +479,9 @@ function loadLists(){
 	});
 }
 
-// actually add lists to select menu
+/*
+ * Renders lists on screen
+ */
 function doneLoadingLists(){
 	$('#listSelectList').html('');
 	for (var key in lists){
@@ -515,7 +566,9 @@ function onLinkClick(){
 // *** viewer ********
 // *******************
 
-// checks accessibility of url
+/*
+ * Gets accessibility data for a URL
+ */
 function checkLink(){
 	var currentURL = $("#urlCheckField")[0].value;
 	currentURL = prepareURL(currentURL);
@@ -539,7 +592,9 @@ function checkLink(){
 // ***** home ********
 // *******************
 
-// makes it so both home buttons occupy corrct area based on device orientation
+/*
+ * Makes both buttons take up 1/2 the screen
+ */
 function resizeHome(){
 	// grab basics
 	var availiableHeight = $(window).height();
@@ -584,6 +639,9 @@ $(document).one("pageshow", function (){
 // ** GET TOP SITES **
 // *******************
 
+/*
+ * Get top reported sites in your area
+ */
 function getTopSites(){
 	$.ajax({
 		url: 'http://www.herdict.org/explore/module/topsites?fc=' + locationData.countryShort,

@@ -1,0 +1,3 @@
+# From: http://www.makebetterthings.com/iphone/gitignore-for-ios-projects/
+.DS_Store
+.xcusorstate

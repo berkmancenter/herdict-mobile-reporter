@@ -17,6 +17,14 @@ Herdict mobile reporter is an Apache Cordova application (previously Phonegap) t
 
 Herdict mobile reporter was designed as an Apache Cordova for iOS application and should be able to be easily ported to other Cordova platforms. Herdict mobile reporter only requires the ChildBrowser plugin to run. ChildBrowser.js should be placed in `resources/js/`.
 
+## Third Party Software
+
+* iOS SDK
+* jQuery
+* jQUery Mobile
+* Apache Cordova (Formerly Phonegap)
+** Childbrowser plugin
+
 ## Test Cases
 
 *The following cases should work*
