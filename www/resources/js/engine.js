@@ -242,8 +242,7 @@ function deQueue(){
 				for (var i = 0; i < resultsLen; i++){
 					// prep for api
 					var sourceId = "6";
-					// TODO: Replace dev2 with www
-					var reportRequest = "http://dev2.herdict.org/action/ajax/plugin/report?" + (r.rows.item(i).accessible ? "siteAccessible" : "siteInaccessible") + "&report.url=" + encodeURIComponent(r.rows.item(i).url) + "&report.country.shortName=" + encodeURIComponent(r.rows.item(i).country) + "&report.ispName=" + encodeURIComponent(r.rows.item(i).isp) + "&report.location=" + encodeURIComponent(r.rows.item(i).location) + "&report.interest=" + encodeURIComponent(r.rows.item(i).interest) + "&report.reason=" + encodeURIComponent(r.rows.item(i).reason) + "&report.tag=" + encodeURIComponent(r.rows.item(i).category) + "&report.comments=" + encodeURIComponent(r.rows.item(i).comment) + "&defaultCountryCode=" + encodeURIComponent(locationData.countryShort) + "&defaultISPName=" + encodeURIComponent(locationData.ispName) + "&report.sourceId=" + sourceId + "&encoding=ROT13"; 
+					var reportRequest = "http://herdict.org/action/ajax/plugin/report?" + (r.rows.item(i).accessible ? "siteAccessible" : "siteInaccessible") + "&report.url=" + encodeURIComponent(r.rows.item(i).url) + "&report.country.shortName=" + encodeURIComponent(r.rows.item(i).country) + "&report.ispName=" + encodeURIComponent(r.rows.item(i).isp) + "&report.location=" + encodeURIComponent(r.rows.item(i).location) + "&report.interest=" + encodeURIComponent(r.rows.item(i).interest) + "&report.reason=" + encodeURIComponent(r.rows.item(i).reason) + "&report.tag=" + encodeURIComponent(r.rows.item(i).category) + "&report.comments=" + encodeURIComponent(r.rows.item(i).comment) + "&defaultCountryCode=" + encodeURIComponent(locationData.countryShort) + "&defaultISPName=" + encodeURIComponent(locationData.ispName) + "&report.sourceId=" + sourceId + "&encoding=ROT13"; 
 					// report 
 					$.ajax({
 						url: reportRequest,
@@ -449,11 +448,11 @@ function loadLists(){
 	$('#listSelectList').html('<li>Loading...</li>');
 	$('#listSelectList').listview('refresh');
 	$.ajax({
-		url: 'http://dev2.herdict.org/ajax/lists/sponsored',
+		url: 'http://herdict.org/ajax/lists/sponsored',
 		success: function (data, status, jqxhr){
 			remoteLists = $.parseJSON(jqxhr.responseText);
 				$.ajax({
-					url: 'http://dev2.herdict.org/ajax/lists/herdict',
+					url: 'http://herdict.org/ajax/lists/herdict',
 					success: function (data, status, jqxhr){
 						remoteLists = remoteLists.concat($.parseJSON(jqxhr.responseText));
 						for (var i = 0; i < remoteLists.length; i++){
