@@ -25,6 +25,10 @@ Herdict mobile reporter was designed as an Apache Cordova for iOS application an
 * Apache Cordova (Formerly Phonegap)
 ** Childbrowser plugin
 
+## Copyright
+
+Copyright President and Fellows of Harvard College, 2012
+
 ## Test Cases
 
 *The following cases should work*
