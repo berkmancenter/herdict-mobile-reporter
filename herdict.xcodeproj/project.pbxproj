@@ -296,8 +296,8 @@
 			isa = PBXGroup;
 			children = (
 				611F2A3415939EDB00F59D3C /* ChildBrowser.bundle */,
-				611F2A3515939EDB00F59D3C /* ChildBrowserCommand.h */,
 				611F2A3615939EDB00F59D3C /* ChildBrowserCommand.m */,
+				611F2A3515939EDB00F59D3C /* ChildBrowserCommand.h */,
 				611F2A3715939EDB00F59D3C /* ChildBrowserViewController.h */,
 				611F2A3815939EDB00F59D3C /* ChildBrowserViewController.m */,
 				611F2A3915939EDB00F59D3C /* ChildBrowserViewController.xib */,
