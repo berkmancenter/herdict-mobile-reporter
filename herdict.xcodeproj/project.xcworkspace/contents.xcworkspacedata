@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:herdict.xcodeproj">
+      location = "self:Herdict.xcodeproj">
    </FileRef>
 </Workspace>

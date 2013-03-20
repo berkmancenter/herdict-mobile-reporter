@@ -14,7 +14,6 @@
 		<link rel="stylesheet" href="resources/jQueryMobile/herdict-theme.min.css" />
 		<script type="text/javascript" src="resources/jQueryMobile/jQueryMobile.js"></script>
 		<!-- Our JS and CSS -->
-		<script type="text/javascript" src="resources/js/ChildBrowser.js"></script>
 		<script type="text/javascript" src="resources/js/engine.js"></script>
 		<link rel="stylesheet" href="resources/css/style.css" />
 	</head>
@@ -66,7 +65,7 @@
 						}
 						$("#urlField").on("change", updateIframeLocation);
 						function openUpLink(){
-							window.plugins.childBrowser.showWebPage(currentURL);
+							window.open(currentURL, '_blank', 'location=yes');
 						}
 					</script>
 				</div>
