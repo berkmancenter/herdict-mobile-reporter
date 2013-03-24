@@ -334,12 +334,6 @@ function loadRandomDomain(){
 				$("#urlField").trigger("change");
 			}
 		}
-		// TODO:possibly delete?, tries to guess category based on categorization group
-		/*
-		$('#categoriesField option:selected').removeAttr("selected");
-		$($('#categoriesField option[value^="' + randomDomain.site.category + '"]')[0]).prop("selected", true);
-		$('#categoriesField').selectmenu("refresh");
-		*/
 	}
 }
 
@@ -533,34 +527,6 @@ $(document).on("pagebeforechange", function (e, data){
 	}
 });
 
-
-
-// *******************
-// *** child browser *
-// *******************
-
-var childbrowser;
- 
-function onBodyLoad(){
-	document.addEventListener("deviceready", onDeviceReady, false);
-}
- 
-function onDeviceReady(){
-	// do your thing!
-	childbrowser = ChildBrowser.install();
-}
-/*
-function onLinkClick(){   
-    if(childbrowser != null){
-        childbrowser.onLocationChange = function(loc){ alert("In index.html new loc = " + loc); };
-        childbrowser.onClose = function(){alert("In index.html child browser closed");};
-        childbrowser.onOpenExternal = function(){alert("In index.html onOpenExternal");};
- 
-        window.plugins.childBrowser.showWebPage("http://google.com");
-    }  
-}
-*/
-
 // *******************
 // *** viewer ********
 // *******************
@@ -658,4 +624,44 @@ function getTopSites(){
 }
 $(document).ready(function (){
 	$("#topsites").on("pageshow", getTopSites);
+});
+
+// *******************************
+// * MODIFY HTML EVENT HANDLERS **
+// *******************************
+
+document.addEventListener("deviceready", function(){
+	// EXTERNAL LINKS
+	$("a[target='_blank']").on("click", function (e){
+		window.open($(this).data("external-href"), '_blank', 'location=yes');
+	});
+
+	// REPORTER PREVIEW WINDOW
+	var currentURL;
+	function updateIframeLocation(){
+		var url = $("#urlField")[0].value;
+		if (url != ""){
+			if (url.substr(0,7) != "http://"){
+				url = "http://" + url;
+			}
+			currentURL = url;
+			openUpLink();
+		}
+	}
+	$("#urlField").on("change", updateIframeLocation);
+	function openUpLink(){
+		window.open(currentURL, '_blank', 'location=yes');
+	}
+
+	// REPORTER COUNTRY SELECTION
+	function updateLocationHeader(){
+		$("#locationHeader .ui-btn-text").html($("#countriesField")[0].value + " - " + $("#locationsField option:selected").html());
+	}
+	$("#countriesField").on("change", updateLocationHeader);
+	$("#locationsField").on("change", updateLocationHeader);
+
+	// SKIP WALKTHRU BUTTON
+	$("#neverShowWalkthrough").on("click", function (){
+		window.skipWalkthrough = "true";
+	});
 });

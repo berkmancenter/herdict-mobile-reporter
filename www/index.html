@@ -23,8 +23,9 @@
 
 		<div id="home" data-role="page">
 			<div data-role="header">
-				<a href="http://herdict.org" target="_blank">Website</a>
+				<a href="#" data-external-href="http://herdict.org" target="_blank">Website</a>
 				<h1>Herdict Mobile</h1>
+				<a href="#legal" data-rel="dialog">Legal</a>
 			</div>
 			<div data-role="content">
 				<a href="#walkthrough" data-role="button" id="reportHomeLink" data-transition="flip">
@@ -35,6 +36,18 @@
 					<img src="resources/img/home/query.png" />
 					<div>View Data</div>
 				</a>
+			</div>
+		</div>
+
+		<!-- Legal -->
+
+		<div id="legal" data-role="page">
+			<div data-role="header">
+				<h1>Legal</h1>
+			</div>
+			<div data-role="content">
+				<a href="#" data-external-href="http://www.herdict.org/about/31" data-role="button" target="_blank">Terms of Service</a>
+				<a href="#" data-external-href="http://www.herdict.org/about/22" data-role="button" target="_blank">Privacy Policy</a>
 			</div>
 		</div>
 
@@ -51,23 +64,6 @@
 				<div id="urlFieldContain">
 					<input id="urlField" placeholder="URL" type="url"/>
 					<a href="#" onclick="openUpLink()" data-role="button" data-iconpos="left" data-theme="a" data-icon="arrow-r" id="iframeLink"></a>
-					<script type="text/javascript">
-						var currentURL;
-						function updateIframeLocation(){
-							var url = $("#urlField")[0].value;
-							if (url != ""){
-								if (url.substr(0,7) != "http://"){
-									url = "http://" + url;
-								}
-								currentURL = url;
-								openUpLink();
-							}
-						}
-						$("#urlField").on("change", updateIframeLocation);
-						function openUpLink(){
-							window.open(currentURL, '_blank', 'location=yes');
-						}
-					</script>
 				</div>
 				<a href="#" class="accessSubmit" id="accessibleButton" onclick="queueUp(true)" data-role="button">Accessible</a> 
 				<a href="#" class="accessSubmit" id="inaccessibleButton" onclick="queueUp(false)" data-role="button">Inaccessible</a> 
@@ -96,11 +92,7 @@
 							</div>
 						</p>
 						<script type="text/javascript">
-							function updateLocationHeader(){
-								$("#locationHeader .ui-btn-text").html($("#countriesField")[0].value + " - " + $("#locationsField option:selected").html());
-							}
-							$("#countriesField").on("change", updateLocationHeader);
-							$("#locationsField").on("change", updateLocationHeader);
+							
 						</script>
 					</div>
 					<div data-role="collapsible" data-theme="a" onclick="scrollToBottom()" data-content-theme="a">
@@ -159,11 +151,6 @@
 					<div>Once you have tapped done, the app will return to the form. Fill it out with any details you want to share and then select 'accessible' or 'inaccessible' to submit. Thanks!</div>
 					<a href="#report" data-role="button" data-transition="flip" data-theme="b">Ok</a>
 					<a href="#report" data-role="button" data-transition="flip" id="neverShowWalkthrough" data-theme="b">Don't show this again</a>
-					<script type="text/javascript">
-						$("#neverShowWalkthrough").on("click", function (){
-							window.skipWalkthrough = "true";
-						});
-					</script>
 				</div>
 			</div>
 		</div>
